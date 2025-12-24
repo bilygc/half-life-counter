@@ -1,0 +1,90 @@
+---
+import TimeCounter from "../components/TimeCounter.astro";
+import { EVENT_NAME, EVENT_DATE } from "../config";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Days Since Counter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main>
+      <TimeCounter eventName={EVENT_NAME} eventDate={EVENT_DATE} />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --hl-bg: #0a0600;
+    --hl-primary: #d47800;
+    --hl-secondary: #5e3a1a;
+    --hl-accent: #e1e1e1;
+    --hl-glow: #ffb400;
+    --hl-text-dim: #a0a0a0;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    font-family: "Outfit", system-ui, sans-serif;
+  }
+
+  body {
+    background: var(--hl-bg);
+    background-image:
+      radial-gradient(
+        circle at 20% 30%,
+        rgba(212, 120, 0, 0.15) 0%,
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 80% 70%,
+        rgba(94, 58, 26, 0.2) 0%,
+        transparent 40%
+      );
+    background-attachment: fixed;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--hl-accent);
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
