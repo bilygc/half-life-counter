@@ -2,8 +2,8 @@
 import TimeCounter from "../components/TimeCounter.astro";
 import Navbar from "../components/Navbar.astro";
 import { EVENT_NAME, EVENT_DATE } from "../config";
-import LeftAdd from "../components/LeftAd.astro";
-import RightAdd from "../components/RightAd.astro";
+import LeftAd from "../components/LeftAd.astro";
+import RightAd from "../components/RightAd.astro";
 ---
 
 <html lang="en">
@@ -23,9 +23,9 @@ import RightAdd from "../components/RightAd.astro";
   <body>
     <Navbar />
     <main>
-      <LeftAdd />
+      <LeftAd />
       <TimeCounter eventName={EVENT_NAME} eventDate={EVENT_DATE} />
-      <RightAdd />
+      <RightAd />
     </main>
   </body>
 </html>
@@ -117,8 +117,8 @@ import RightAdd from "../components/RightAd.astro";
     padding: 0 2rem;
   }
 
-  body.ads-hidden .left-add,
-  body.ads-hidden .right-add {
+  body.ads-hidden .left-ad,
+  body.ads-hidden .right-ad {
     display: none;
   }
 </style>
