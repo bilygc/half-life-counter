@@ -1,0 +1,206 @@
+---
+import Navbar from "../components/Navbar.astro";
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>About - Time-Life 3</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <Navbar />
+        <main>
+            <section class="about-container">
+                <h1 class="about-title">
+                    PROJECT STATUS: <span class="highlight">CONFIDENTIAL</span>
+                </h1>
+                <div class="about-content">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </p>
+                    <p>
+                        Duis aute irure dolor in reprehenderit in voluptate
+                        velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in
+                        culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Curabitur pretium tincidunt lacus. Nulla gravida orci a
+                        odio. Nullam varius, turpis et commodo pharetra, est
+                        eros bibendum elit, nec luctus magna felis sollicitudin
+                        mauris. Integer in mauris eu nibh euismod gravida. Duis
+                        ac tellus et risus vulputate vehicula. Donec lobortis
+                        risus a elit. Etiam tempor. Ut ullamcorper, ligula eu
+                        tempor congue, eros est euismod turpis, id tincidunt
+                        sapien risus a quam. Maecenas fermentum consequat mi.
+                        Donec fermentum. Pellentesque malesuada nulla a mi. Duis
+                        sapien sem, aliquet nec, commodo eget, consequat quis,
+                        neque. Aliquam faucibus, elit ut dictum aliquet, felis
+                        nisl adipiscing sapien, sed pretium diam sem ut ipsum.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Nullam in dui mauris. Vivamus hendrerit arcu sed erat
+                        molestie vehicula. Sed auctor neque eu tellus rhoncus ut
+                        eleifend nibh porttitor. Ut in nulla enim. Phasellus
+                        molestie magna non est bibendum non venenatis nisl
+                        tempor. Suspendisse dictum feugiat nisl ut dapibus.
+                        Mauris iaculis porttitor posuere. Praesent id metus
+                        massa, ut blandit odio. Proin quis tortor orci. Etiam at
+                        risus et justo dignissim congue. Donec congue lacinia
+                        dui, a porttitor lectus condimentum laoreet. Nunc
+                        adipiscing cursus sodales.
+                    </p>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
+
+<style is:global>
+    :root {
+        --hl-bg: #0a0600;
+        --hl-primary: #d47800;
+        --hl-secondary: #5e3a1a;
+        --hl-accent: #e1e1e1;
+        --hl-glow: #ffb400;
+        --hl-text-dim: #a0a0a0;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        font-family: "Outfit", system-ui, sans-serif;
+    }
+
+    body {
+        background: var(--hl-bg);
+        background-image:
+            linear-gradient(rgba(10, 6, 0, 0.75), rgba(10, 6, 0, 0.75)),
+            url("/lambda-bg.png");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        color: var(--hl-accent);
+        position: relative;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    body::after {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background:
+            linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+            linear-gradient(
+                90deg,
+                rgba(212, 120, 0, 0.02),
+                rgba(0, 212, 120, 0.01),
+                rgba(0, 120, 212, 0.02)
+            );
+        z-index: 100;
+        background-size:
+            100% 4px,
+            4px 100%;
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+    main {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 120px 2rem 4rem;
+    }
+
+    .about-container {
+        max-width: 800px;
+        width: 100%;
+        background: rgba(10, 6, 0, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(212, 120, 0, 0.3);
+        padding: 3rem;
+        position: relative;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .about-container::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        width: 20px;
+        height: 20px;
+        border-top: 2px solid var(--hl-primary);
+        border-left: 2px solid var(--hl-primary);
+    }
+
+    .about-container::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        right: -1px;
+        width: 20px;
+        height: 20px;
+        border-bottom: 2px solid var(--hl-primary);
+        border-right: 2px solid var(--hl-primary);
+    }
+
+    .about-title {
+        font-size: 2rem;
+        letter-spacing: 4px;
+        color: var(--hl-primary);
+        margin-bottom: 2rem;
+        border-bottom: 1px solid rgba(212, 120, 0, 0.2);
+        padding-bottom: 1rem;
+        text-shadow: 0 0 10px rgba(212, 120, 0, 0.3);
+    }
+
+    .highlight {
+        color: #ff4444;
+        text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+    }
+
+    .about-content {
+        line-height: 1.8;
+        font-weight: 300;
+    }
+
+    .about-content p {
+        margin-bottom: 1.5rem;
+        color: var(--hl-accent);
+        opacity: 0.9;
+    }
+
+    .about-content p:last-child {
+        margin-bottom: 0;
+    }
+</style>

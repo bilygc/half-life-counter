@@ -1,6 +1,9 @@
 ---
 import TimeCounter from "../components/TimeCounter.astro";
+import Navbar from "../components/Navbar.astro";
 import { EVENT_NAME, EVENT_DATE } from "../config";
+import LeftAdd from "../components/LeftAd.astro";
+import RightAdd from "../components/RightAd.astro";
 ---
 
 <html lang="en">
@@ -18,8 +21,11 @@ import { EVENT_NAME, EVENT_DATE } from "../config";
     />
   </head>
   <body>
+    <Navbar />
     <main>
+      <LeftAdd />
       <TimeCounter eventName={EVENT_NAME} eventDate={EVENT_DATE} />
+      <RightAdd />
     </main>
   </body>
 </html>
@@ -50,22 +56,43 @@ import { EVENT_NAME, EVENT_DATE } from "../config";
   body {
     background: var(--hl-bg);
     background-image:
-      radial-gradient(
-        circle at 20% 30%,
-        rgba(212, 120, 0, 0.15) 0%,
-        transparent 40%
-      ),
-      radial-gradient(
-        circle at 80% 70%,
-        rgba(94, 58, 26, 0.2) 0%,
-        transparent 40%
-      );
+      linear-gradient(rgba(10, 6, 0, 0.75), rgba(10, 6, 0, 0.75)),
+      url("/lambda-bg.png");
+    background-size: cover;
+    background-position: center;
     background-attachment: fixed;
+    background-repeat: no-repeat;
 
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--hl-accent);
+    position: relative;
+    overflow: hidden;
+  }
+
+  body::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background:
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+      linear-gradient(
+        90deg,
+        rgba(212, 120, 0, 0.02),
+        rgba(0, 212, 120, 0.01),
+        rgba(0, 120, 212, 0.02)
+      );
+    z-index: 100;
+    background-size:
+      100% 4px,
+      4px 100%;
+    pointer-events: none;
+    opacity: 0.4;
   }
 
   @keyframes gradient {
@@ -86,5 +113,12 @@ import { EVENT_NAME, EVENT_DATE } from "../config";
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 2rem;
+    padding: 0 2rem;
+  }
+
+  body.ads-hidden .left-add,
+  body.ads-hidden .right-add {
+    display: none;
   }
 </style>
