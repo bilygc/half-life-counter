@@ -9,7 +9,7 @@
                 <span class="lambda-icon">λ</span> TIME-LIFE 3
             </a>
         </div>
-        <div class="nav-right">
+        <div class="nav-right desktop-menu">
             <a href="#embed" class="nav-link">Embed</a>
             <a href="/about" class="nav-link">About</a>
             <a
@@ -22,20 +22,66 @@
                 ADS: <span id="ads-status">ON</span>
             </button>
         </div>
+        <button class="hamburger" id="hamburger-btn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#embed" class="mobile-nav-link">Embed</a>
+        <a href="/about" class="mobile-nav-link">About</a>
+        <a
+            href="https://x.com/__bilydev"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mobile-nav-link">X</a
+        >
+        <button id="ads-toggle-mobile" class="nav-toggle">
+            ADS: <span id="ads-status-mobile">ON</span>
+        </button>
     </div>
 </nav>
 
 <script>
     const adsToggle = document.getElementById("ads-toggle");
+    const adsToggleMobile = document.getElementById("ads-toggle-mobile");
     const adsStatus = document.getElementById("ads-status");
+    const adsStatusMobile = document.getElementById("ads-status-mobile");
+    const hamburgerBtn = document.getElementById("hamburger-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
     let adsEnabled = true;
 
-    if (adsToggle && adsStatus) {
-        adsToggle.addEventListener("click", () => {
-            adsEnabled = !adsEnabled;
-            document.body.classList.toggle("ads-hidden", !adsEnabled);
-            adsStatus.textContent = adsEnabled ? "ON" : "OFF";
-            adsToggle.classList.toggle("toggle-off", !adsEnabled);
+    function toggleAds() {
+        adsEnabled = !adsEnabled;
+        document.body.classList.toggle("ads-hidden", !adsEnabled);
+
+        if (adsStatus) adsStatus.textContent = adsEnabled ? "ON" : "OFF";
+        if (adsStatusMobile)
+            adsStatusMobile.textContent = adsEnabled ? "ON" : "OFF";
+
+        if (adsToggle) adsToggle.classList.toggle("toggle-off", !adsEnabled);
+        if (adsToggleMobile)
+            adsToggleMobile.classList.toggle("toggle-off", !adsEnabled);
+    }
+
+    if (adsToggle) adsToggle.addEventListener("click", toggleAds);
+    if (adsToggleMobile) adsToggleMobile.addEventListener("click", toggleAds);
+
+    if (hamburgerBtn && mobileMenu) {
+        hamburgerBtn.addEventListener("click", () => {
+            hamburgerBtn.classList.toggle("active");
+            mobileMenu.classList.toggle("active");
+        });
+
+        // Close menu when clicking a link
+        const mobileLinks = mobileMenu.querySelectorAll(".mobile-nav-link");
+        mobileLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+                hamburgerBtn.classList.remove("active");
+                mobileMenu.classList.remove("active");
+            });
         });
     }
 </script>
@@ -96,7 +142,7 @@
         filter: brightness(1.2);
     }
 
-    .nav-right {
+    .nav-right.desktop-menu {
         display: flex;
         gap: 2.5rem;
     }
@@ -164,29 +210,108 @@
         background: rgba(160, 160, 160, 0.05);
     }
 
-    .nav-toggle.toggle-off #ads-status {
+    .nav-toggle.toggle-off #ads-status,
+    .nav-toggle.toggle-off #ads-status-mobile {
         color: #ff4444;
     }
 
-    #ads-status {
+    #ads-status,
+    #ads-status-mobile {
         color: #44ff44;
         transition: color 0.3s ease;
     }
 
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1001;
+    }
+
+    .hamburger span {
+        width: 100%;
+        height: 3px;
+        background-color: var(--hl-primary);
+        border-radius: 10px;
+        transition: all 0.3s linear;
+        position: relative;
+        transform-origin: 1px;
+    }
+
+    .hamburger.active span:first-child {
+        transform: rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg);
+    }
+
+    .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: rgba(10, 6, 0, 0.95);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        transition: right 0.3s ease-in-out;
+        z-index: 1000;
+        border-left: 1px solid rgba(212, 120, 0, 0.2);
+    }
+
+    .mobile-menu.active {
+        right: 0;
+    }
+
+    .mobile-nav-link {
+        color: var(--hl-accent);
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: 4px;
+        opacity: 0.8;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-nav-link:hover {
+        opacity: 1;
+        color: var(--hl-primary);
+        text-shadow: 0 0 10px var(--hl-primary);
+    }
+
     @media (max-width: 768px) {
         .navbar {
-            padding: 0 1rem;
+            padding: 0 1.5rem;
         }
-        .nav-right {
-            gap: 1.5rem;
+        .nav-right.desktop-menu {
+            display: none;
+        }
+        .hamburger {
+            display: flex;
+        }
+        .mobile-menu {
+            display: flex;
         }
         .nav-title {
             font-size: 1.2rem;
             letter-spacing: 2px;
-        }
-        .nav-link {
-            font-size: 0.75rem;
-            letter-spacing: 1px;
         }
     }
 </style>

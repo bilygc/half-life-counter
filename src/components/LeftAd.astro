@@ -15,8 +15,9 @@
 <style>
     .left-ad {
         position: fixed;
-        flex-grow: 1;
         left: 0;
+        top: 50%;
+        transform: translateY(-50%);
         height: auto;
         background: rgba(10, 6, 0, 0.4);
         backdrop-filter: blur(10px);
@@ -24,6 +25,7 @@
         display: flex;
         align-items: center;
         padding: 0 2rem;
+        z-index: 10;
     }
 
     .left-ad-container {
@@ -103,7 +105,17 @@
 
     @media (max-width: 768px) {
         .left-ad {
-            padding: 0 1rem;
+            position: relative;
+            top: 0;
+            transform: none;
+            width: 100%;
+            padding: 1rem;
+            justify-content: center;
+            border-bottom: 1px solid rgba(212, 120, 0, 0.2);
+            margin-top: 70px;
+        }
+        .left-ad-container {
+            justify-content: center;
         }
         .left-ad-right {
             gap: 1.5rem;
