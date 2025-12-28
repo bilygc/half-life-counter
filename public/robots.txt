@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://time-life3.netlify.app/sitemap-index.xml

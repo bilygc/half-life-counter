@@ -25,44 +25,35 @@ import "@fontsource/outfit/700.css";
                 </h1>
                 <div class="about-content">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
+                        The goal of this project is to track the days that have
+                        passed since the release of <span class="hl-bold"
+                            >Half-Life 2: Episode Two</span
+                        >. In the absence of an official sequel, many of us
+                        still keep the faith (myself included). Although hope
+                        wavers at times, every new rumor rekindles it. After
+                        all, as long as there is life, the wait continues.
                     </p>
                     <p>
-                        Duis aute irure dolor in reprehenderit in voluptate
-                        velit esse cillum dolore eu fugiat nulla pariatur.
-                        Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.
+                        A gamer at heart and a programmer by trade, I created
+                        this space as a tribute to the community and in memory
+                        of those who left us while waiting for this story’s
+                        conclusion.
                     </p>
                     <p>
-                        Curabitur pretium tincidunt lacus. Nulla gravida orci a
-                        odio. Nullam varius, turpis et commodo pharetra, est
-                        eros bibendum elit, nec luctus magna felis sollicitudin
-                        mauris. Integer in mauris eu nibh euismod gravida. Duis
-                        ac tellus et risus vulputate vehicula. Donec lobortis
-                        risus a elit. Etiam tempor. Ut ullamcorper, ligula eu
-                        tempor congue, eros est euismod turpis, id tincidunt
-                        sapien risus a quam. Maecenas fermentum consequat mi.
-                        Donec fermentum. Pellentesque malesuada nulla a mi. Duis
-                        sapien sem, aliquet nec, commodo eget, consequat quis,
-                        neque. Aliquam faucibus, elit ut dictum aliquet, felis
-                        nisl adipiscing sapien, sed pretium diam sem ut ipsum.
+                        The day a sequel is announced, this counter will
+                        transform into a countdown, marking the end of this
+                        project and a wait that has defined a generation of
+                        players. <span class="hl-bold"
+                            >...Rise and shine, Mister Freeman.</span
+                        >
                     </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Nullam in dui mauris. Vivamus hendrerit arcu sed erat
-                        molestie vehicula. Sed auctor neque eu tellus rhoncus ut
-                        eleifend nibh porttitor. Ut in nulla enim. Phasellus
-                        molestie magna non est bibendum non venenatis nisl
-                        tempor. Suspendisse dictum feugiat nisl ut dapibus.
-                        Mauris iaculis porttitor posuere. Praesent id metus
-                        massa, ut blandit odio. Proin quis tortor orci. Etiam at
-                        risus et justo dignissim congue. Donec congue lacinia
-                        dui, a porttitor lectus condimentum laoreet. Nunc
-                        adipiscing cursus sodales.
+                    <p class="legal-disclaimer">
+                        <i
+                            >Legal Disclaimer: This project is independent and
+                            is not affiliated with Valve Corporation or the
+                            Half-Life franchise. No copyrighted materials have
+                            been used.</i
+                        >
                     </p>
                 </div>
             </section>
@@ -184,6 +175,13 @@ import "@fontsource/outfit/700.css";
         text-shadow: 0 0 10px rgba(212, 120, 0, 0.3);
     }
 
+    @media (max-width: 768px) {
+        .about-title {
+            font-size: 1.45rem;
+            letter-spacing: 2px;
+        }
+    }
+
     .highlight {
         color: #ff4444;
         text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
@@ -202,5 +200,15 @@ import "@fontsource/outfit/700.css";
 
     .about-content p:last-child {
         margin-bottom: 0;
+    }
+
+    .hl-bold {
+        font-weight: bold;
+    }
+
+    .legal-disclaimer {
+        border-top: 1px solid rgba(212, 120, 0, 0.2);
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(212, 120, 0, 0.2);
     }
 </style>
