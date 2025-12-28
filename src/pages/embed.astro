@@ -1,0 +1,140 @@
+---
+import { EVENT_NAME, EVENT_DATE } from "../config";
+import "@fontsource/outfit/700.css";
+
+const transparent = Astro.url.searchParams.get("transparent") === "1";
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Embed Counter</title>
+        <style is:global>
+            :root {
+                --hl-bg: #0a0600;
+                --hl-primary: #d47800;
+                --hl-secondary: #5e3a1a;
+                --hl-accent: #e1e1e1;
+                --hl-glow: #ffb400;
+                --hl-text-dim: #a0a0a0;
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            html,
+            body {
+                height: 100%;
+                width: 100%;
+                font-family: "Outfit", system-ui, sans-serif;
+                overflow: hidden;
+                background: transparent;
+            }
+
+            .embed-container {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: var(--hl-accent);
+                text-align: center;
+                padding: 1rem;
+                transition: background 0.3s ease;
+            }
+
+            .embed-container.with-bg {
+                background: linear-gradient(135deg, #0a0600 0%, #1a1005 100%);
+                backdrop-filter: blur(8px);
+                border: 1px solid var(--hl-secondary);
+                border-radius: 8px;
+                box-shadow:
+                    inset 0 0 15px rgba(212, 120, 0, 0.1),
+                    0 5px 15px rgba(0, 0, 0, 0.5);
+            }
+
+            .days-count {
+                font-size: 3.5rem;
+                font-weight: 700;
+                color: var(--hl-glow);
+                text-shadow: 0 0 15px rgba(255, 180, 0, 0.5);
+                line-height: 1;
+            }
+
+            .hms-text {
+                font-size: 1.5rem;
+                font-family: "Courier New", Courier, monospace;
+                font-weight: 700;
+                color: var(--hl-primary);
+                margin-top: 0.5rem;
+            }
+
+            .event-label {
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: var(--hl-secondary);
+                margin-top: 0.5rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div
+            class={`embed-container ${transparent ? "" : "with-bg"}`}
+            data-event-date={EVENT_DATE}
+        >
+            <div id="counter-content">
+                <div id="days-display" class="days-count">0d</div>
+                <div id="hms-display" class="hms-text">00h 00m 00s</div>
+                <div class="event-label">{EVENT_NAME}</div>
+            </div>
+        </div>
+
+        <script>
+            function updateCounter() {
+                const container = document.querySelector(".embed-container");
+                if (!container) return;
+
+                const eventDate = container.getAttribute("data-event-date");
+                if (!eventDate) return;
+
+                const target = new Date(eventDate).getTime();
+                const now = new Date().getTime();
+                const diff = now - target;
+
+                if (diff <= 0) {
+                    const daysEl = document.getElementById("days-display");
+                    const hmsEl = document.getElementById("hms-display");
+                    if (daysEl) daysEl.textContent = "0d";
+                    if (hmsEl) hmsEl.textContent = "00h 00m 00s";
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor(
+                    (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+                );
+                const minutes = Math.floor(
+                    (diff % (1000 * 60 * 60)) / (1000 * 60),
+                );
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                const daysEl = document.getElementById("days-display");
+                const hmsEl = document.getElementById("hms-display");
+
+                if (daysEl) daysEl.textContent = `${days}d`;
+                if (hmsEl) {
+                    hmsEl.textContent = `${hours.toString().padStart(2, "0")}h ${minutes.toString().padStart(2, "0")}m ${seconds.toString().padStart(2, "0")}s`;
+                }
+            }
+
+            updateCounter();
+            setInterval(updateCounter, 1000);
+        </script>
+    </body>
+</html>
