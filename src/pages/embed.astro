@@ -1,5 +1,5 @@
 ---
-import { EVENT_NAME, EVENT_DATE } from "../config";
+import { EVENT_DATE } from "../config";
 import "@fontsource/outfit/700.css";
 
 const transparent = Astro.url.searchParams.get("transparent") === "1";
@@ -91,13 +91,13 @@ const transparent = Astro.url.searchParams.get("transparent") === "1";
             <div id="counter-content">
                 <div id="days-display" class="days-count">0d</div>
                 <div id="hms-display" class="hms-text">00h 00m 00s</div>
-                <div class="event-label">{EVENT_NAME}</div>
+                <div class="event-label">without half-life 3</div>
             </div>
         </div>
 
         <script>
+            const container = document.querySelector(".embed-container");
             function updateCounter() {
-                const container = document.querySelector(".embed-container");
                 if (!container) return;
 
                 const eventDate = container.getAttribute("data-event-date");
@@ -131,6 +131,15 @@ const transparent = Astro.url.searchParams.get("transparent") === "1";
                 if (hmsEl) {
                     hmsEl.textContent = `${hours.toString().padStart(2, "0")}h ${minutes.toString().padStart(2, "0")}m ${seconds.toString().padStart(2, "0")}s`;
                 }
+            }
+
+            // Handle transparency parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const isTransparent = urlParams.get("transparent") === "1";
+            if (isTransparent) {
+                container?.classList.remove("with-bg");
+            } else {
+                container?.classList.add("with-bg");
             }
 
             updateCounter();
