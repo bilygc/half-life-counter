@@ -1,5 +1,6 @@
 ---
-
+const { pathname } = Astro.url;
+const isHome = pathname === "/";
 ---
 
 <nav class="navbar">
@@ -18,9 +19,13 @@
                 rel="noopener noreferrer"
                 class="nav-link">X</a
             >
-            <button id="ads-toggle" class="nav-toggle">
-                ADS: <span id="ads-status">ON</span>
-            </button>
+            {
+                isHome && (
+                    <button id="ads-toggle" class="nav-toggle">
+                        ADS: <span id="ads-status">ON</span>
+                    </button>
+                )
+            }
         </div>
         <button class="hamburger" id="hamburger-btn" aria-label="Menu">
             <span></span>
@@ -37,53 +42,71 @@
             rel="noopener noreferrer"
             class="mobile-nav-link">X</a
         >
-        <button id="ads-toggle-mobile" class="nav-toggle">
-            ADS: <span id="ads-status-mobile">ON</span>
-        </button>
+        {
+            isHome && (
+                <button id="ads-toggle-mobile" class="nav-toggle">
+                    ADS: <span id="ads-status-mobile">ON</span>
+                </button>
+            )
+        }
     </div>
 </nav>
 
 <script>
-    const adsToggle = document.getElementById("ads-toggle");
-    const adsToggleMobile = document.getElementById("ads-toggle-mobile");
-    const adsStatus = document.getElementById("ads-status");
-    const adsStatusMobile = document.getElementById("ads-status-mobile");
-    const hamburgerBtn = document.getElementById("hamburger-btn");
-    const mobileMenu = document.getElementById("mobile-menu");
-
     let adsEnabled = true;
 
-    function toggleAds() {
-        adsEnabled = !adsEnabled;
-        document.body.classList.toggle("ads-hidden", !adsEnabled);
+    function setup() {
+        const adsToggle = document.getElementById("ads-toggle");
+        const adsToggleMobile = document.getElementById("ads-toggle-mobile");
+        const adsStatus = document.getElementById("ads-status");
+        const adsStatusMobile = document.getElementById("ads-status-mobile");
+        const hamburgerBtn = document.getElementById("hamburger-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
 
-        if (adsStatus) adsStatus.textContent = adsEnabled ? "ON" : "OFF";
-        if (adsStatusMobile)
-            adsStatusMobile.textContent = adsEnabled ? "ON" : "OFF";
+        function updateAdsUI() {
+            document.body.classList.toggle("ads-hidden", !adsEnabled);
 
-        if (adsToggle) adsToggle.classList.toggle("toggle-off", !adsEnabled);
+            if (adsStatus) adsStatus.textContent = adsEnabled ? "ON" : "OFF";
+            if (adsStatusMobile)
+                adsStatusMobile.textContent = adsEnabled ? "ON" : "OFF";
+
+            if (adsToggle)
+                adsToggle.classList.toggle("toggle-off", !adsEnabled);
+            if (adsToggleMobile)
+                adsToggleMobile.classList.toggle("toggle-off", !adsEnabled);
+        }
+
+        function toggleAds() {
+            adsEnabled = !adsEnabled;
+            updateAdsUI();
+        }
+
+        // Initialize UI state
+        updateAdsUI();
+
+        if (adsToggle) adsToggle.addEventListener("click", toggleAds);
         if (adsToggleMobile)
-            adsToggleMobile.classList.toggle("toggle-off", !adsEnabled);
-    }
+            adsToggleMobile.addEventListener("click", toggleAds);
 
-    if (adsToggle) adsToggle.addEventListener("click", toggleAds);
-    if (adsToggleMobile) adsToggleMobile.addEventListener("click", toggleAds);
-
-    if (hamburgerBtn && mobileMenu) {
-        hamburgerBtn.addEventListener("click", () => {
-            hamburgerBtn.classList.toggle("active");
-            mobileMenu.classList.toggle("active");
-        });
-
-        // Close menu when clicking a link
-        const mobileLinks = mobileMenu.querySelectorAll(".mobile-nav-link");
-        mobileLinks.forEach((link) => {
-            link.addEventListener("click", () => {
-                hamburgerBtn.classList.remove("active");
-                mobileMenu.classList.remove("active");
+        if (hamburgerBtn && mobileMenu) {
+            hamburgerBtn.addEventListener("click", () => {
+                hamburgerBtn.classList.toggle("active");
+                mobileMenu.classList.toggle("active");
             });
-        });
+
+            // Close menu when clicking a link
+            const mobileLinks = mobileMenu.querySelectorAll(".mobile-nav-link");
+            mobileLinks.forEach((link) => {
+                link.addEventListener("click", () => {
+                    hamburgerBtn.classList.remove("active");
+                    mobileMenu.classList.remove("active");
+                });
+            });
+        }
     }
+
+    // Initialize on first load and after view transitions
+    document.addEventListener("astro:page-load", setup);
 </script>
 
 <style>

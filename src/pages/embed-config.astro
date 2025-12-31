@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import Navbar from "../components/Navbar.astro";
 import "@fontsource/outfit/300.css";
 import "@fontsource/outfit/700.css";
@@ -10,6 +11,7 @@ import "@fontsource/outfit/700.css";
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/png" href="/favicon.png" />
         <title>Embed Config - Half-Life Counter</title>
+        <ClientRouter />
     </head>
     <body>
         <Navbar />
@@ -315,69 +317,76 @@ import "@fontsource/outfit/700.css";
         </style>
 
         <script>
-            const widthInput = document.getElementById(
-                "width-input",
-            ) as HTMLInputElement;
-            const heightInput = document.getElementById(
-                "height-input",
-            ) as HTMLInputElement;
-            const transparentCheckbox = document.getElementById(
-                "transparent-checkbox",
-            ) as HTMLInputElement;
-            const previewIframe = document.getElementById(
-                "preview-iframe",
-            ) as HTMLIFrameElement;
-            const embedCodeText = document.getElementById("embed-code-text");
-            const copyButton = document.getElementById("copy-button");
+            function setup() {
+                const widthInput = document.getElementById(
+                    "width-input",
+                ) as HTMLInputElement;
+                const heightInput = document.getElementById(
+                    "height-input",
+                ) as HTMLInputElement;
+                const transparentCheckbox = document.getElementById(
+                    "transparent-checkbox",
+                ) as HTMLInputElement;
+                const previewIframe = document.getElementById(
+                    "preview-iframe",
+                ) as HTMLIFrameElement;
+                const embedCodeText =
+                    document.getElementById("embed-code-text");
+                const copyButton = document.getElementById("copy-button");
 
-            function updateEmbed() {
-                if (
-                    !widthInput ||
-                    !heightInput ||
-                    !transparentCheckbox ||
-                    !previewIframe ||
-                    !embedCodeText
-                )
-                    return;
+                function updateEmbed() {
+                    if (
+                        !widthInput ||
+                        !heightInput ||
+                        !transparentCheckbox ||
+                        !previewIframe ||
+                        !embedCodeText
+                    )
+                        return;
 
-                const width = widthInput.value || "400";
-                const height = heightInput.value || "150";
-                const transparent = transparentCheckbox.checked ? "1" : "0";
+                    const width = widthInput.value || "400";
+                    const height = heightInput.value || "150";
+                    const transparent = transparentCheckbox.checked ? "1" : "0";
 
-                const origin = window.location.origin;
-                const embedUrl = `${origin}/embed?transparent=${transparent}`;
-                const code = `<iframe src="${embedUrl}" width="${width}" height="${height}" frameborder="0"></iframe>`;
+                    const origin = window.location.origin;
+                    const embedUrl = `${origin}/embed?transparent=${transparent}`;
+                    const code = `<iframe src="${embedUrl}" width="${width}" height="${height}" frameborder="0"></iframe>`;
 
-                // Update Preview
-                previewIframe.style.width = `${width}px`;
-                previewIframe.style.height = `${height}px`;
-                previewIframe.src = embedUrl;
+                    // Update Preview
+                    previewIframe.style.width = `${width}px`;
+                    previewIframe.style.height = `${height}px`;
+                    previewIframe.src = embedUrl;
 
-                // Update Code Text
-                embedCodeText.textContent = code;
+                    // Update Code Text
+                    embedCodeText.textContent = code;
+                }
+
+                widthInput?.addEventListener("input", updateEmbed);
+                heightInput?.addEventListener("input", updateEmbed);
+                transparentCheckbox?.addEventListener("change", updateEmbed);
+
+                copyButton?.addEventListener("click", () => {
+                    if (!embedCodeText || !copyButton) return;
+                    const code = embedCodeText.textContent || "";
+                    navigator.clipboard.writeText(code).then(() => {
+                        const originalText = copyButton.textContent;
+                        copyButton.textContent = "Copied!";
+                        (copyButton as HTMLElement).style.background =
+                            "#059669";
+
+                        setTimeout(() => {
+                            copyButton.textContent = originalText;
+                            (copyButton as HTMLElement).style.background = "";
+                        }, 2000);
+                    });
+                });
+
+                // Initial update
+                updateEmbed();
             }
 
-            widthInput?.addEventListener("input", updateEmbed);
-            heightInput?.addEventListener("input", updateEmbed);
-            transparentCheckbox?.addEventListener("change", updateEmbed);
-
-            copyButton?.addEventListener("click", () => {
-                if (!embedCodeText || !copyButton) return;
-                const code = embedCodeText.textContent || "";
-                navigator.clipboard.writeText(code).then(() => {
-                    const originalText = copyButton.textContent;
-                    copyButton.textContent = "Copied!";
-                    (copyButton as HTMLElement).style.background = "#059669";
-
-                    setTimeout(() => {
-                        copyButton.textContent = originalText;
-                        (copyButton as HTMLElement).style.background = "";
-                    }, 2000);
-                });
-            });
-
-            // Initial update
-            updateEmbed();
+            // Initialize on first load and after view transitions
+            document.addEventListener("astro:page-load", setup);
         </script>
     </body>
 </html>

@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import { EVENT_DATE } from "../config";
 import "@fontsource/outfit/700.css";
 
@@ -10,6 +11,7 @@ const transparent = Astro.url.searchParams.get("transparent") === "1";
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <title>Embed Counter</title>
+        <ClientRouter />
         <style is:global>
             :root {
                 --hl-bg: #0a0600;
@@ -96,54 +98,67 @@ const transparent = Astro.url.searchParams.get("transparent") === "1";
         </div>
 
         <script>
-            const container = document.querySelector(".embed-container");
-            function updateCounter() {
+            let intervalId: number | undefined;
+
+            function setup() {
+                const container = document.querySelector(".embed-container");
                 if (!container) return;
 
-                const eventDate = container.getAttribute("data-event-date");
-                if (!eventDate) return;
+                function updateCounter() {
+                    const eventDate =
+                        container?.getAttribute("data-event-date");
+                    if (!eventDate) return;
 
-                const target = new Date(eventDate).getTime();
-                const now = new Date().getTime();
-                const diff = now - target;
+                    const target = new Date(eventDate).getTime();
+                    const now = new Date().getTime();
+                    const diff = now - target;
 
-                if (diff <= 0) {
+                    if (diff <= 0) {
+                        const daysEl = document.getElementById("days-display");
+                        const hmsEl = document.getElementById("hms-display");
+                        if (daysEl) daysEl.textContent = "0d";
+                        if (hmsEl) hmsEl.textContent = "00h 00m 00s";
+                        return;
+                    }
+
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor(
+                        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+                    );
+                    const minutes = Math.floor(
+                        (diff % (1000 * 60 * 60)) / (1000 * 60),
+                    );
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
                     const daysEl = document.getElementById("days-display");
                     const hmsEl = document.getElementById("hms-display");
-                    if (daysEl) daysEl.textContent = "0d";
-                    if (hmsEl) hmsEl.textContent = "00h 00m 00s";
-                    return;
+
+                    if (daysEl) daysEl.textContent = `${days}d`;
+                    if (hmsEl) {
+                        hmsEl.textContent = `${hours.toString().padStart(2, "0")}h ${minutes.toString().padStart(2, "0")}m ${seconds.toString().padStart(2, "0")}s`;
+                    }
                 }
 
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor(
-                    (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-                );
-                const minutes = Math.floor(
-                    (diff % (1000 * 60 * 60)) / (1000 * 60),
-                );
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                const daysEl = document.getElementById("days-display");
-                const hmsEl = document.getElementById("hms-display");
-
-                if (daysEl) daysEl.textContent = `${days}d`;
-                if (hmsEl) {
-                    hmsEl.textContent = `${hours.toString().padStart(2, "0")}h ${minutes.toString().padStart(2, "0")}m ${seconds.toString().padStart(2, "0")}s`;
+                // Handle transparency parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const isTransparent = urlParams.get("transparent") === "1";
+                if (isTransparent) {
+                    container?.classList.remove("with-bg");
+                } else {
+                    container?.classList.add("with-bg");
                 }
+
+                // Clear existing interval if any
+                if (intervalId) {
+                    clearInterval(intervalId);
+                }
+
+                updateCounter();
+                intervalId = window.setInterval(updateCounter, 1000);
             }
 
-            // Handle transparency parameter
-            const urlParams = new URLSearchParams(window.location.search);
-            const isTransparent = urlParams.get("transparent") === "1";
-            if (isTransparent) {
-                container?.classList.remove("with-bg");
-            } else {
-                container?.classList.add("with-bg");
-            }
-
-            updateCounter();
-            setInterval(updateCounter, 1000);
+            // Initialize on first load and after view transitions
+            document.addEventListener("astro:page-load", setup);
         </script>
     </body>
 </html>

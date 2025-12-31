@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import TimeCounter from "../components/TimeCounter.astro";
 import Navbar from "../components/Navbar.astro";
 import { EVENT_NAME, EVENT_DATE } from "../config";
@@ -23,6 +24,7 @@ import "@fontsource/outfit/700.css";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Days Since Half-Life 3</title>
+    <ClientRouter />
   </head>
   <body>
     <Navbar />

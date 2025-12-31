@@ -42,43 +42,59 @@ const { eventName, eventDate } = Astro.props;
 </div>
 
 <script>
-  function updateCounter() {
-    const container = document.querySelector(".counter-container");
-    if (!container) return;
+  let intervalId: number | undefined;
 
-    const eventDate = container.getAttribute("data-event-date");
-    if (!eventDate) return;
+  function setup() {
+    function updateCounter() {
+      const container = document.querySelector(".counter-container");
+      if (!container) return;
 
-    const target = new Date(eventDate).getTime();
-    const now = new Date().getTime();
-    const diff = now - target;
+      const eventDate = container.getAttribute("data-event-date");
+      if (!eventDate) return;
 
-    if (diff <= 0) {
-      document
-        .querySelectorAll(".hms-count, .days-count")
-        .forEach((el) => (el.textContent = "0"));
-      return;
+      const target = new Date(eventDate).getTime();
+      const now = new Date().getTime();
+      const diff = now - target;
+
+      if (diff <= 0) {
+        document
+          .querySelectorAll(".hms-count, .days-count")
+          .forEach((el) => (el.textContent = "0"));
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      );
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const daysEl = document.getElementById("days-count");
+      const hoursEl = document.getElementById("hours-count");
+      const minutesEl = document.getElementById("minutes-count");
+      const secondsEl = document.getElementById("seconds-count");
+
+      if (daysEl) daysEl.textContent = days.toString();
+      if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, "0");
+      if (minutesEl)
+        minutesEl.textContent = minutes.toString().padStart(2, "0");
+      if (secondsEl)
+        secondsEl.textContent = seconds.toString().padStart(2, "0");
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    // Clear existing interval if any
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
 
-    const daysEl = document.getElementById("days-count");
-    const hoursEl = document.getElementById("hours-count");
-    const minutesEl = document.getElementById("minutes-count");
-    const secondsEl = document.getElementById("seconds-count");
-
-    if (daysEl) daysEl.textContent = days.toString();
-    if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, "0");
-    if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, "0");
-    if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, "0");
+    // Update immediately and then every second
+    updateCounter();
+    intervalId = window.setInterval(updateCounter, 1000);
   }
 
-  // Update immediately and then every second
-  updateCounter();
-  setInterval(updateCounter, 1000);
+  // Initialize on first load and after view transitions
+  document.addEventListener("astro:page-load", setup);
 </script>
 
 <style>
