@@ -5,6 +5,6 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://time-life3.netlify.app',
+  site: 'https://time-life3.com',
   integrations: [sitemap()]
 });
