@@ -19,13 +19,13 @@ const isHome = pathname === "/";
                 rel="noopener noreferrer"
                 class="nav-link">X</a
             >
-            {
+            <!-- {
                 isHome && (
                     <button id="ads-toggle" class="nav-toggle">
                         ADS: <span id="ads-status">ON</span>
                     </button>
                 )
-            }
+            } -->
         </div>
         <button class="hamburger" id="hamburger-btn" aria-label="Menu">
             <span></span>
@@ -42,18 +42,18 @@ const isHome = pathname === "/";
             rel="noopener noreferrer"
             class="mobile-nav-link">X</a
         >
-        {
+        <!-- {
             isHome && (
                 <button id="ads-toggle-mobile" class="nav-toggle">
                     ADS: <span id="ads-status-mobile">ON</span>
                 </button>
             )
-        }
+        } -->
     </div>
 </nav>
 
 <script>
-    let adsEnabled = true;
+    let adsEnabled = false;
 
     function setup() {
         const adsToggle = document.getElementById("ads-toggle");
