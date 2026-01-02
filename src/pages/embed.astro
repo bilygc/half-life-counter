@@ -8,6 +8,20 @@ const transparent = Astro.url.searchParams.get("transparent") === "1";
 
 <html lang="en">
     <head>
+        <!-- Google tag (gtag.js) -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-C7CR2EMC73"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-C7CR2EMC73");
+        </script>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <title>Embed Counter</title>
