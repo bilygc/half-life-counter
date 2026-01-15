@@ -2,6 +2,7 @@
 import { ClientRouter } from "astro:transitions";
 import TimeCounter from "../components/TimeCounter.astro";
 import Navbar from "../components/Navbar.astro";
+import News from "../components/News.astro";
 import { EVENT_NAME, EVENT_DATE } from "../config";
 import LeftAd from "../components/LeftAd.astro";
 import RightAd from "../components/RightAd.astro";
@@ -43,7 +44,10 @@ import "@fontsource/outfit/700.css";
     <Navbar />
     <main>
       <LeftAd />
-      <TimeCounter eventName={EVENT_NAME} eventDate={EVENT_DATE} />
+      <div class="center-content">
+        <TimeCounter eventName={EVENT_NAME} eventDate={EVENT_DATE} />
+        <News />
+      </div>
       <RightAd />
     </main>
   </body>
@@ -134,9 +138,17 @@ import "@fontsource/outfit/700.css";
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 2rem;
     padding: 70px 2rem 0;
+  }
+
+  .center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
   }
 
   @media (max-width: 768px) {
