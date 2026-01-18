@@ -11,6 +11,10 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
     "@fontsource/outfit": "^5.2.8",
+    "aos": "^2.3.4",
     "astro": "^5.16.6"
+  },
+  "devDependencies": {
+    "@types/aos": "^3.0.7"
   }
 }

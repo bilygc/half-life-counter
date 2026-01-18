@@ -22,22 +22,28 @@ interface HLNews {
 let articles: Article[] = [];
 let error: string | null = null;
 
-console.log("Token from .env:", import.meta.env.HL_NEWS_TOKEN);
-
 const url = isLocal
   ? "http://localhost:8080/news"
   : "https://half-life.onrender.com/news";
 
 try {
+  console.log(`>>> Attempting to fetch news from: ${url}`);
+
+  if (!HL_NEWS_TOKEN) {
+    console.warn("WARNING: HL_NEWS_TOKEN is not defined.");
+  }
+
   const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${HL_NEWS_TOKEN}`,
+      Accept: "application/json",
+      "User-Agent": "Astro-App",
     },
   });
 
   if (!response.ok) {
     const text = await response.text();
-    // Try to parse JSON error if possible
+    console.error(`>>> API Error Response (${response.status}):`, text);
     try {
       const json = JSON.parse(text);
       throw new Error(json.error || response.statusText);
@@ -48,12 +54,23 @@ try {
 
   const data = (await response.json()) as HLNews;
   articles = data.articles;
+  console.log(`>>> Successfully fetched ${articles.length} articles.`);
 } catch (e: any) {
   error = e.message;
-  console.error("Failed to fetch news:", e);
+  console.error(">>> Fetch Error Details:", {
+    message: e.message,
+    cause: e.cause, // Node 18+ fetch provides 'cause'
+    code: e.code,
+  });
 }
 ---
 
+<script>
+  import AOS from "aos";
+  import "aos/dist/aos.css";
+
+  AOS.init();
+</script>
 <section class="news-section">
   <h2>Latest News</h2>
 
@@ -73,8 +90,12 @@ try {
 
   <div class="news-list">
     {
-      articles.map((article) => (
-        <article class="news-item">
+      articles.map((article, index) => (
+        <article
+          class="news-item"
+          data-aos={`fade-${index % 2 === 0 ? "left" : "right"}`}
+          data-aos-delay={index * 100}
+        >
           <div class="news-content">
             <h3>
               <a href={article.url} target="_blank" rel="noopener noreferrer">
@@ -111,6 +132,7 @@ try {
     margin: 4rem auto;
     padding: 0 1rem;
     color: var(--hl-accent);
+    overflow-x: hidden;
   }
 
   h2 {
