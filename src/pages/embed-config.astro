@@ -6,403 +6,393 @@ import "@fontsource/outfit/700.css";
 ---
 
 <html lang="en">
-    <head>
-        <!-- Google tag (gtag.js) -->
-        <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-C7CR2EMC73"
-        ></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C7CR2EMC73"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-            gtag("config", "G-C7CR2EMC73");
-        </script>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="canonical" href="https://time-life3.com/embed-config" />
-        <link rel="icon" type="image/png" href="/favicon.png" />
-        <title>Embed Config - Half-Life Counter</title>
-        <ClientRouter />
-    </head>
-    <body>
-        <Navbar />
-        <main class="config-main">
-            <div class="config-card">
-                <h1 class="config-title">Embed Timer Configuration</h1>
+      gtag("config", "G-C7CR2EMC73");
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="canonical" href="https://time-life3.com/embed-config" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>
+      Embed the half-life 3 days counter in your stream or website - Half-Life
+      Counter
+    </title>
+    <ClientRouter />
+  </head>
+  <body>
+    <Navbar />
+    <main class="config-main">
+      <div class="config-card">
+        <h1 class="config-title">Embed Timer Configuration</h1>
 
-                <div class="preview-section">
-                    <p class="section-label">Preview</p>
-                    <div class="preview-container">
-                        <iframe
-                            title="Embed preview"
-                            id="preview-iframe"
-                            src="/embed?transparent=0"
-                            width="400"
-                            height="150"
-                            frameborder="0"></iframe>
-                    </div>
-                </div>
+        <div class="preview-section">
+          <p class="section-label">Preview</p>
+          <div class="preview-container">
+            <iframe
+              title="Embed preview"
+              id="preview-iframe"
+              src="/embed?transparent=0"
+              width="400"
+              height="150"
+              frameborder="0"></iframe>
+          </div>
+        </div>
 
-                <div class="input-grid">
-                    <div class="input-group">
-                        <label for="width-input">Width (pixels)</label>
-                        <input
-                            type="number"
-                            id="width-input"
-                            value="400"
-                            min="200"
-                            max="1200"
-                        />
-                    </div>
-                    <div class="input-group">
-                        <label for="height-input">Height (pixels)</label>
-                        <input
-                            type="number"
-                            id="height-input"
-                            value="150"
-                            min="100"
-                            max="600"
-                        />
-                    </div>
-                </div>
+        <div class="input-grid">
+          <div class="input-group">
+            <label for="width-input">Width (pixels)</label>
+            <input
+              type="number"
+              id="width-input"
+              value="400"
+              min="200"
+              max="1200"
+            />
+          </div>
+          <div class="input-group">
+            <label for="height-input">Height (pixels)</label>
+            <input
+              type="number"
+              id="height-input"
+              value="150"
+              min="100"
+              max="600"
+            />
+          </div>
+        </div>
 
-                <div class="checkbox-group">
-                    <input type="checkbox" id="transparent-checkbox" />
-                    <label for="transparent-checkbox"
-                        >Transparent Background (for OBS overlays)</label
-                    >
-                </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="transparent-checkbox" />
+          <label for="transparent-checkbox"
+            >Transparent Background (for OBS overlays)</label
+          >
+        </div>
 
-                <div class="code-section">
-                    <p class="section-label">Embed Code</p>
-                    <div class="code-block">
-                        <code id="embed-code-text">
-                            &lt;iframe
-                            src="https://timenite.com/embed?transparent=0"
-                            width="400" height="150"
-                            frameborder="0"&gt;&lt;/iframe&gt;
-                        </code>
-                    </div>
-                </div>
+        <div class="code-section">
+          <p class="section-label">Embed Code</p>
+          <div class="code-block">
+            <code id="embed-code-text">
+              &lt;iframe src="https://timenite.com/embed?transparent=0"
+              width="400" height="150" frameborder="0"&gt;&lt;/iframe&gt;
+            </code>
+          </div>
+        </div>
 
-                <button id="copy-button" class="copy-btn"
-                    >Copy Embed Code</button
-                >
+        <button id="copy-button" class="copy-btn">Copy Embed Code</button>
 
-                <div class="instructions-box">
-                    <h2 class="instructions-title">
-                        Instructions for Streamers
-                    </h2>
-                    <ul class="instructions-list">
-                        <li>Copy the embed code above</li>
-                        <li>In OBS, add a Browser Source</li>
-                        <li>Set the URL to the iframe src value</li>
-                        <li>Set width and height to match your settings</li>
-                        <li>
-                            Enable "Shutdown source when not visible" for
-                            performance
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </main>
+        <div class="instructions-box">
+          <h2 class="instructions-title">Instructions for Streamers</h2>
+          <ul class="instructions-list">
+            <li>Copy the embed code above</li>
+            <li>In OBS, add a Browser Source</li>
+            <li>Set the URL to the iframe src value</li>
+            <li>Set width and height to match your settings</li>
+            <li>Enable "Shutdown source when not visible" for performance</li>
+          </ul>
+        </div>
+      </div>
+    </main>
 
-        <style is:global>
-            :root {
-                --hl-bg: #0a0600;
-                --hl-primary: #d47800;
-                --hl-secondary: #5e3a1a;
-                --hl-accent: #e1e1e1;
-                --hl-glow: #ffb400;
-                --hl-text-dim: #a0a0a0;
-                --card-bg: #1a1a2e; /* From image suggestion */
-                --input-bg: #0f0f1d;
-                --btn-primary: var(--hl-primary);
-            }
+    <style is:global>
+      :root {
+        --hl-bg: #0a0600;
+        --hl-primary: #d47800;
+        --hl-secondary: #5e3a1a;
+        --hl-accent: #e1e1e1;
+        --hl-glow: #ffb400;
+        --hl-text-dim: #a0a0a0;
+        --card-bg: #1a1a2e; /* From image suggestion */
+        --input-bg: #0f0f1d;
+        --btn-primary: var(--hl-primary);
+      }
 
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-            }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-            html,
-            body {
-                height: 100%;
-                width: 100%;
-                font-family: "Outfit", system-ui, sans-serif;
-                background: var(--hl-bg);
-                background-image:
-                    linear-gradient(rgba(10, 6, 0, 0.85), rgba(10, 6, 0, 0.85)),
-                    url("/lambda-bg.jpeg");
-                background-size: cover;
-                background-position: center;
-                background-attachment: fixed;
-                color: var(--hl-accent);
-            }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        font-family: "Outfit", system-ui, sans-serif;
+        background: var(--hl-bg);
+        background-image:
+          linear-gradient(rgba(10, 6, 0, 0.85), rgba(10, 6, 0, 0.85)),
+          url("/lambda-bg.jpeg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: var(--hl-accent);
+      }
 
-            .config-main {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 100vh;
-                padding: 100px 1rem 2rem;
-            }
+      .config-main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 100px 1rem 2rem;
+      }
 
-            .config-card {
-                background: rgba(10, 6, 0, 0.75);
-                backdrop-filter: blur(12px);
-                border: 1px solid var(--hl-secondary);
-                border-radius: 20px;
-                padding: 2.5rem;
-                width: 100%;
-                max-width: 650px;
-                box-shadow:
-                    0 0 50px rgba(212, 120, 0, 0.15),
-                    0 20px 40px rgba(0, 0, 0, 0.8);
-            }
+      .config-card {
+        background: rgba(10, 6, 0, 0.75);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--hl-secondary);
+        border-radius: 20px;
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 650px;
+        box-shadow:
+          0 0 50px rgba(212, 120, 0, 0.15),
+          0 20px 40px rgba(0, 0, 0, 0.8);
+      }
 
-            .config-title {
-                font-size: 2rem;
-                text-align: center;
-                margin-bottom: 2rem;
-                font-weight: 700;
-                letter-spacing: 1px;
-            }
+      .config-title {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
 
-            .section-label {
-                font-size: 0.9rem;
-                font-weight: 700;
-                margin-bottom: 0.8rem;
-                color: var(--hl-accent);
-            }
+      .section-label {
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-bottom: 0.8rem;
+        color: var(--hl-accent);
+      }
 
-            .preview-section {
-                margin-bottom: 1.5rem;
-            }
+      .preview-section {
+        margin-bottom: 1.5rem;
+      }
 
-            .preview-container {
-                background: #050510;
-                border-radius: 12px;
-                padding: 1.5rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 200px;
-                border: 1px solid rgba(255, 255, 255, 0.05);
-            }
+      .preview-container {
+        background: #050510;
+        border-radius: 12px;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
 
-            .input-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
+      .input-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
 
-            .input-group {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
 
-            .input-group label {
-                font-size: 0.85rem;
-                color: var(--hl-accent);
-                font-weight: 700;
-            }
+      .input-group label {
+        font-size: 0.85rem;
+        color: var(--hl-accent);
+        font-weight: 700;
+      }
 
-            .input-group input {
-                background: var(--input-bg);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 8px;
-                padding: 0.8rem;
-                color: white;
-                font-family: inherit;
-                font-size: 1rem;
-            }
+      .input-group input {
+        background: var(--input-bg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 0.8rem;
+        color: white;
+        font-family: inherit;
+        font-size: 1rem;
+      }
 
-            .checkbox-group {
-                display: flex;
-                align-items: center;
-                gap: 0.8rem;
-                margin-bottom: 2rem;
-                font-size: 0.9rem;
-                cursor: pointer;
-            }
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
 
-            .checkbox-group input {
-                width: 18px;
-                height: 18px;
-                cursor: pointer;
-            }
+      .checkbox-group input {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
 
-            .code-section {
-                margin-bottom: 1rem;
-            }
+      .code-section {
+        margin-bottom: 1rem;
+      }
 
-            .code-block {
-                background: var(--input-bg);
-                border-radius: 8px;
-                padding: 1.2rem;
-                font-family: "Courier New", Courier, monospace;
-                font-size: 0.85rem;
-                color: #4ade80; /* Greenish code color */
-                word-break: break-all;
-                border: 1px solid rgba(255, 255, 255, 0.05);
-            }
+      .code-block {
+        background: var(--input-bg);
+        border-radius: 8px;
+        padding: 1.2rem;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.85rem;
+        color: #4ade80; /* Greenish code color */
+        word-break: break-all;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
 
-            .copy-btn {
-                width: 100%;
-                background: var(--btn-primary);
-                color: white;
-                border: none;
-                border-radius: 8px;
-                padding: 1rem;
-                font-size: 1rem;
-                font-weight: 700;
-                cursor: pointer;
-                transition:
-                    transform 0.2s,
-                    background 0.2s,
-                    box-shadow 0.2s;
-                margin-bottom: 2rem;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                box-shadow: 0 4px 0 #8b4e00; /* Darker orange for 3D effect */
-            }
+      .copy-btn {
+        width: 100%;
+        background: var(--btn-primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 1rem;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          background 0.2s,
+          box-shadow 0.2s;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 0 #8b4e00; /* Darker orange for 3D effect */
+      }
 
-            .copy-btn:hover {
-                background: #f48b00;
-                transform: translateY(-1px);
-                box-shadow: 0 5px 0 #8b4e00;
-            }
+      .copy-btn:hover {
+        background: #f48b00;
+        transform: translateY(-1px);
+        box-shadow: 0 5px 0 #8b4e00;
+      }
 
-            .copy-btn:active {
-                transform: translateY(2px);
-                box-shadow: 0 2px 0 #8b4e00;
-            }
+      .copy-btn:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 0 #8b4e00;
+      }
 
-            .instructions-box {
-                border: 1px solid rgba(212, 120, 0, 0.3);
-                background: rgba(212, 120, 0, 0.05);
-                border-radius: 12px;
-                padding: 1.5rem;
-            }
+      .instructions-box {
+        border: 1px solid rgba(212, 120, 0, 0.3);
+        background: rgba(212, 120, 0, 0.05);
+        border-radius: 12px;
+        padding: 1.5rem;
+      }
 
-            .instructions-title {
-                color: #fbbf24;
-                font-size: 1rem;
-                margin-bottom: 1rem;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
+      .instructions-title {
+        color: #fbbf24;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
 
-            .instructions-list {
-                list-style: none;
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
+      .instructions-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
 
-            .instructions-list li {
-                font-size: 0.85rem;
-                color: #d1d5db;
-                position: relative;
-                padding-left: 1.2rem;
-            }
+      .instructions-list li {
+        font-size: 0.85rem;
+        color: #d1d5db;
+        position: relative;
+        padding-left: 1.2rem;
+      }
 
-            .instructions-list li::before {
-                content: "•";
-                position: absolute;
-                left: 0;
-                color: #fbbf24;
-            }
+      .instructions-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #fbbf24;
+      }
 
-            @media (max-width: 600px) {
-                .input-grid {
-                    grid-template-columns: 1fr;
-                }
-                .config-card {
-                    padding: 1.5rem;
-                }
-            }
-        </style>
+      @media (max-width: 600px) {
+        .input-grid {
+          grid-template-columns: 1fr;
+        }
+        .config-card {
+          padding: 1.5rem;
+        }
+      }
+    </style>
 
-        <script>
-            function setup() {
-                const widthInput = document.getElementById(
-                    "width-input",
-                ) as HTMLInputElement;
-                const heightInput = document.getElementById(
-                    "height-input",
-                ) as HTMLInputElement;
-                const transparentCheckbox = document.getElementById(
-                    "transparent-checkbox",
-                ) as HTMLInputElement;
-                const previewIframe = document.getElementById(
-                    "preview-iframe",
-                ) as HTMLIFrameElement;
-                const embedCodeText =
-                    document.getElementById("embed-code-text");
-                const copyButton = document.getElementById("copy-button");
+    <script>
+      function setup() {
+        const widthInput = document.getElementById(
+          "width-input",
+        ) as HTMLInputElement;
+        const heightInput = document.getElementById(
+          "height-input",
+        ) as HTMLInputElement;
+        const transparentCheckbox = document.getElementById(
+          "transparent-checkbox",
+        ) as HTMLInputElement;
+        const previewIframe = document.getElementById(
+          "preview-iframe",
+        ) as HTMLIFrameElement;
+        const embedCodeText = document.getElementById("embed-code-text");
+        const copyButton = document.getElementById("copy-button");
 
-                function updateEmbed() {
-                    if (
-                        !widthInput ||
-                        !heightInput ||
-                        !transparentCheckbox ||
-                        !previewIframe ||
-                        !embedCodeText
-                    )
-                        return;
+        function updateEmbed() {
+          if (
+            !widthInput ||
+            !heightInput ||
+            !transparentCheckbox ||
+            !previewIframe ||
+            !embedCodeText
+          )
+            return;
 
-                    const width = widthInput.value || "400";
-                    const height = heightInput.value || "150";
-                    const transparent = transparentCheckbox.checked ? "1" : "0";
+          const width = widthInput.value || "400";
+          const height = heightInput.value || "150";
+          const transparent = transparentCheckbox.checked ? "1" : "0";
 
-                    const origin = window.location.origin;
-                    const embedUrl = `${origin}/embed?transparent=${transparent}`;
-                    const code = `<iframe src="${embedUrl}" width="${width}" height="${height}" frameborder="0"></iframe>`;
+          const origin = window.location.origin;
+          const embedUrl = `${origin}/embed?transparent=${transparent}`;
+          const code = `<iframe src="${embedUrl}" width="${width}" height="${height}" frameborder="0"></iframe>`;
 
-                    // Update Preview
-                    previewIframe.style.width = `${width}px`;
-                    previewIframe.style.height = `${height}px`;
-                    previewIframe.src = embedUrl;
+          // Update Preview
+          previewIframe.style.width = `${width}px`;
+          previewIframe.style.height = `${height}px`;
+          previewIframe.src = embedUrl;
 
-                    // Update Code Text
-                    embedCodeText.textContent = code;
-                }
+          // Update Code Text
+          embedCodeText.textContent = code;
+        }
 
-                widthInput?.addEventListener("input", updateEmbed);
-                heightInput?.addEventListener("input", updateEmbed);
-                transparentCheckbox?.addEventListener("change", updateEmbed);
+        widthInput?.addEventListener("input", updateEmbed);
+        heightInput?.addEventListener("input", updateEmbed);
+        transparentCheckbox?.addEventListener("change", updateEmbed);
 
-                copyButton?.addEventListener("click", () => {
-                    if (!embedCodeText || !copyButton) return;
-                    const code = embedCodeText.textContent || "";
-                    navigator.clipboard.writeText(code).then(() => {
-                        const originalText = copyButton.textContent;
-                        copyButton.textContent = "Copied!";
-                        (copyButton as HTMLElement).style.background =
-                            "#059669";
+        copyButton?.addEventListener("click", () => {
+          if (!embedCodeText || !copyButton) return;
+          const code = embedCodeText.textContent || "";
+          navigator.clipboard.writeText(code).then(() => {
+            const originalText = copyButton.textContent;
+            copyButton.textContent = "Copied!";
+            (copyButton as HTMLElement).style.background = "#059669";
 
-                        setTimeout(() => {
-                            copyButton.textContent = originalText;
-                            (copyButton as HTMLElement).style.background = "";
-                        }, 2000);
-                    });
-                });
+            setTimeout(() => {
+              copyButton.textContent = originalText;
+              (copyButton as HTMLElement).style.background = "";
+            }, 2000);
+          });
+        });
 
-                // Initial update
-                updateEmbed();
-            }
+        // Initial update
+        updateEmbed();
+      }
 
-            // Initialize on first load and after view transitions
-            document.addEventListener("astro:page-load", setup);
-        </script>
-    </body>
+      // Initialize on first load and after view transitions
+      document.addEventListener("astro:page-load", setup);
+    </script>
+  </body>
 </html>
