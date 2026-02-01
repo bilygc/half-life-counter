@@ -96,6 +96,7 @@ try {
           data-aos={`fade-${index % 2 === 0 ? "left" : "right"}`}
           data-aos-delay={index * 100}
         >
+          {index === 0 && <div>Hello World</div>}
           <div class="news-content">
             <h3>
               <a href={article.url} target="_blank" rel="noopener noreferrer">
