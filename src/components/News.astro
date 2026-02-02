@@ -1,68 +1,11 @@
 ---
-const { HL_NEWS_TOKEN } = import.meta.env;
-const isLocal = import.meta.env.DEV;
-
-interface Article {
-  source: { id: string | null; name: string };
-  author: string;
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string | null;
-  publishedAt: string;
-  content: string;
-}
-
-interface HLNews {
-  status: string;
-  totalResults: number;
+import type { Article } from "../pages/index.astro";
+interface Props {
   articles: Article[];
+  error: string | null;
 }
 
-let articles: Article[] = [];
-let error: string | null = null;
-
-const url = isLocal
-  ? "http://localhost:8080/news"
-  : "https://half-life.onrender.com/news";
-
-try {
-  console.log(`>>> Attempting to fetch news from: ${url}`);
-
-  if (!HL_NEWS_TOKEN) {
-    console.warn("WARNING: HL_NEWS_TOKEN is not defined.");
-  }
-
-  const response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${HL_NEWS_TOKEN}`,
-      Accept: "application/json",
-      "User-Agent": "Astro-App",
-    },
-  });
-
-  if (!response.ok) {
-    const text = await response.text();
-    console.error(`>>> API Error Response (${response.status}):`, text);
-    try {
-      const json = JSON.parse(text);
-      throw new Error(json.error || response.statusText);
-    } catch {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
-    }
-  }
-
-  const data = (await response.json()) as HLNews;
-  articles = data.articles;
-  console.log(`>>> Successfully fetched ${articles.length} articles.`);
-} catch (e: any) {
-  error = e.message;
-  console.error(">>> Fetch Error Details:", {
-    message: e.message,
-    cause: e.cause, // Node 18+ fetch provides 'cause'
-    code: e.code,
-  });
-}
+const { articles, error } = Astro.props;
 ---
 
 <script>
@@ -90,38 +33,42 @@ try {
 
   <div class="news-list">
     {
-      articles.map((article, index) => (
-        <article
-          class="news-item"
-          data-aos={`fade-${index % 2 === 0 ? "left" : "right"}`}
-          data-aos-delay={index * 100}
-        >
-          {index === 0 && <div>Hello World</div>}
-          <div class="news-content">
-            <h3>
-              <a href={article.url} target="_blank" rel="noopener noreferrer">
-                {article.title}
-              </a>
-            </h3>
-            <div class="news-meta">
-              <span class="news-source">{article.source.name}</span>
-              <span class="news-date">
-                {new Date(article.publishedAt).toLocaleDateString()}
-              </span>
+      articles.map((article, index) => {
+        if (index === 0) {
+          return;
+        }
+        return (
+          <article
+            class="news-item"
+            data-aos={`fade-${index % 2 === 0 ? "left" : "right"}`}
+            data-aos-delay={index * 100}
+          >
+            <div class="news-content">
+              <h3>
+                <a href={article.url} target="_blank" rel="noopener noreferrer">
+                  {article.title}
+                </a>
+              </h3>
+              <div class="news-meta">
+                <span class="news-source">{article.source.name}</span>
+                <span class="news-date">
+                  {new Date(article.publishedAt).toLocaleDateString()}
+                </span>
+              </div>
+              <p>{article.description}</p>
             </div>
-            <p>{article.description}</p>
-          </div>
-          {article.urlToImage && (
-            <div class="news-image">
-              <img
-                src={article.urlToImage}
-                alt={article.title}
-                loading="lazy"
-              />
-            </div>
-          )}
-        </article>
-      ))
+            {article.urlToImage && (
+              <div class="news-image">
+                <img
+                  src={article.urlToImage}
+                  alt={article.title}
+                  loading="lazy"
+                />
+              </div>
+            )}
+          </article>
+        );
+      })
     }
   </div>
 </section>
