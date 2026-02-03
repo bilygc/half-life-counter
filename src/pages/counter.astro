@@ -1,0 +1,238 @@
+---
+import { ClientRouter } from "astro:transitions";
+import TimeCounter from "../components/TimeCounter.astro";
+import Navbar from "../components/Navbar.astro";
+import News from "../components/News.astro";
+import { EVENT_NAME, EVENT_DATE } from "../config";
+import LeftAd from "../components/LeftAd.astro";
+import RightAd from "../components/RightAd.astro";
+import "@fontsource/outfit/300.css";
+import "@fontsource/outfit/700.css";
+
+const { HL_NEWS_TOKEN } = import.meta.env;
+const isLocal = import.meta.env.DEV;
+
+export interface Article {
+    source: { id: string | null; name: string };
+    author: string;
+    title: string;
+    description: string;
+    url: string;
+    urlToImage: string | null;
+    publishedAt: string;
+    content: string;
+}
+
+interface HLNews {
+    status: string;
+    totalResults: number;
+    articles: Article[];
+}
+
+let articles: Article[] = [];
+let error: string | null = null;
+
+const url = isLocal
+    ? "http://localhost:8080/news"
+    : "https://half-life.onrender.com/news";
+
+try {
+    console.log(`>>> Attempting to fetch news from: ${url}`);
+
+    if (!HL_NEWS_TOKEN) {
+        console.warn("WARNING: HL_NEWS_TOKEN is not defined.");
+    }
+
+    const response = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${HL_NEWS_TOKEN}`,
+            Accept: "application/json",
+            "User-Agent": "Astro-App",
+        },
+    });
+
+    if (!response.ok) {
+        const text = await response.text();
+        console.error(`>>> API Error Response (${response.status}):`, text);
+        try {
+            const json = JSON.parse(text);
+            throw new Error(json.error || response.statusText);
+        } catch {
+            throw new Error(
+                `API Error: ${response.status} ${response.statusText}`,
+            );
+        }
+    }
+
+    const data = (await response.json()) as HLNews;
+    articles = data.articles;
+    console.log(`>>> Successfully fetched ${articles.length} articles.`);
+} catch (e: any) {
+    error = e.message;
+    console.error(">>> Fetch Error Details:", {
+        message: e.message,
+        cause: e.cause, // Node 18+ fetch provides 'cause'
+        code: e.code,
+    });
+}
+---
+
+<html lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-C7CR2EMC73"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-C7CR2EMC73");
+        </script>
+        <meta charset="utf-8" />
+        <meta
+            name="google-site-verification"
+            content="YZJG1RXFMe6DFYwiLcUmD4dC0YEkclq03_3PbA7E3rk"
+        />
+        <meta
+            name="description"
+            content="Days since a half-life 3 game release counter"
+        />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <link rel="canonical" href="https://time-life3.com/" />
+        <title>Days Without Half-Life 3</title>
+        <ClientRouter />
+    </head>
+    <body>
+        <Navbar />
+        <main>
+            <LeftAd />
+            <div class="center-content">
+                <Hero article={articles[0]} />
+                <News articles={articles} error={error} />
+                <TimeCounter eventName={EVENT_NAME} eventDate={EVENT_DATE} />
+            </div>
+            <RightAd />
+        </main>
+    </body>
+</html>
+
+<style is:global>
+    :root {
+        --hl-bg: #0a0600;
+        --hl-primary: #d47800;
+        --hl-secondary: #5e3a1a;
+        --hl-accent: #e1e1e1;
+        --hl-glow: #ffb400;
+        --hl-text-dim: #a0a0a0;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        font-family: "Outfit", system-ui, sans-serif;
+    }
+
+    body {
+        background: var(--hl-bg);
+        background-image:
+            linear-gradient(rgba(10, 6, 0, 0.75), rgba(10, 6, 0, 0.75)),
+            url("/lambda-bg.jpeg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        color: var(--hl-accent);
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    body::after {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background:
+            linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+            linear-gradient(
+                90deg,
+                rgba(212, 120, 0, 0.02),
+                rgba(0, 212, 120, 0.01),
+                rgba(0, 120, 212, 0.02)
+            );
+        z-index: 100;
+        background-size:
+            100% 4px,
+            4px 100%;
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    main {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 2rem;
+        padding: 90px 2rem 0;
+    }
+
+    .center-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    @media (max-width: 768px) {
+        main {
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 0 0 0;
+            gap: 0;
+            justify-content: flex-start;
+        }
+    }
+
+    body.ads-hidden .left-ad,
+    body.ads-hidden .right--ad {
+        display: none;
+    }
+</style>
