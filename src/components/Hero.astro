@@ -4,29 +4,31 @@ const { article } = Astro.props as { article: Article };
 ---
 
 <article class="hero">
-  <div class="hero-image">
-    <img src={article.urlToImage} alt={article.title} />
-    <div class="gradient"></div>
-  </div>
-  <div class="hero-content">
-    <h4>BREAKING NEWS</h4>
-    <h3>{article.title}</h3>
-    <p>{article.description}</p>
-    <small>Read full story</small>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="lucide lucide-arrow-up-right h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-      ><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg
-    >
-  </div>
+  <a href={article.url} target="_blank" rel="noopener noreferrer">
+    <div class="hero-image">
+      <img src={article.urlToImage} alt={article.title} />
+      <div class="gradient"></div>
+    </div>
+    <div class="hero-content">
+      <h4>BREAKING NEWS</h4>
+      <h3>{article.title}</h3>
+      <p>{article.description}</p>
+      <small>Read full story</small>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-arrow-up-right h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        ><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg
+      >
+    </div>
+  </a>
 </article>
 
 <style>
