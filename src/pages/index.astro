@@ -1,10 +1,8 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import Hero from "../components/Hero.astro";
-import TimeCounter from "../components/TimeCounter.astro";
 import Navbar from "../components/Navbar.astro";
 import News from "../components/News.astro";
-import { EVENT_NAME, EVENT_DATE } from "../config";
 import LeftAd from "../components/LeftAd.astro";
 import RightAd from "../components/RightAd.astro";
 import "@fontsource/outfit/300.css";
@@ -113,7 +111,6 @@ try {
       <div class="center-content">
         <Hero article={articles[0]} />
         <News articles={articles} error={error} />
-        <TimeCounter eventName={EVENT_NAME} eventDate={EVENT_DATE} />
       </div>
       <RightAd />
     </main>
@@ -179,7 +176,7 @@ try {
         rgba(0, 212, 120, 0.01),
         rgba(0, 120, 212, 0.02)
       );
-    z-index: 100;
+    z-index: 5;
     background-size:
       100% 4px,
       4px 100%;
