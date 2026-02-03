@@ -34,6 +34,7 @@ const { article } = Astro.props as { article: Article };
 <style>
   .hero {
     position: relative;
+    z-index: 6;
     &:hover img {
       transform: scale(1.05);
     }
@@ -47,7 +48,7 @@ const { article } = Astro.props as { article: Article };
     background: #323e47;
     background: linear-gradient(
       38deg,
-      rgba(50, 62, 71, 1) 0%,
+      rgb(52, 56, 60) 0%,
       rgba(119, 122, 125, 1) 25%,
       rgba(212, 120, 0, 0.57) 100%
     );
@@ -73,6 +74,14 @@ const { article } = Astro.props as { article: Article };
     position: absolute;
     bottom: 0;
     padding: 24px;
+    small,
+    svg {
+      color: var(--hl-primary);
+    }
+    svg {
+      position: relative;
+      top: 5px;
+    }
   }
   h4 {
     font-size: 12px;
