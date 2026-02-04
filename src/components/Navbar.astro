@@ -35,7 +35,8 @@ const isHome = pathname === "/";
     </button>
   </div>
   <div class="mobile-menu" id="mobile-menu">
-    <a href="/embed-config" class="mobile-nav-link">Embed</a>
+    <!-- <a href="/embed-config" class="mobile-nav-link">Embed</a> -->
+    <a href="/counter" class="mobile-nav-link">How much time has passed?</a>
     <a href="/about" class="mobile-nav-link">About</a>
     <a
       href="https://x.com/__bilydev"
@@ -296,6 +297,7 @@ const isHome = pathname === "/";
     transition: right 0.3s ease-in-out;
     z-index: 1000;
     border-left: 1px solid rgba(212, 120, 0, 0.2);
+    text-align: center;
   }
 
   .mobile-menu.active {
