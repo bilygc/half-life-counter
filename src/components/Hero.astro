@@ -13,20 +13,22 @@ const { article } = Astro.props as { article: Article };
       <h4>BREAKING NEWS</h4>
       <h3>{article.title}</h3>
       <p>{article.description}</p>
-      <small>Read full story</small>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="lucide lucide-arrow-up-right h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-        ><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg
-      >
+      <div>
+        <small>Read full story</small>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-arrow-up-right h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          ><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg
+        >
+      </div>
     </div>
   </a>
 </article>
@@ -35,10 +37,8 @@ const { article } = Astro.props as { article: Article };
   .hero {
     position: relative;
     z-index: 6;
-    &:hover img {
-      transform: scale(1.05);
-    }
   }
+
   .gradient {
     position: absolute;
     top: 0;
@@ -56,24 +56,21 @@ const { article } = Astro.props as { article: Article };
   }
 
   .hero-image {
-    aspect-ratio: 21 / 9;
-    overflow: hidden;
-    position: relative;
+    height: 450px;
     img {
-      transition-duration: 500ms;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-  }
-
-  .hero-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
 
   .hero-content {
     position: absolute;
     bottom: 0;
     padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     small,
     svg {
       color: var(--hl-primary);
@@ -83,21 +80,61 @@ const { article } = Astro.props as { article: Article };
       top: 5px;
     }
   }
+
   h4 {
     font-size: 12px;
     color: var(--hl-primary);
   }
+
   h3 {
-    font-size: 48px;
+    font-size: 20px;
     max-width: 768px;
     color: var(--hl-glow);
   }
+
   p {
-    font-size: 16px;
+    line-height: 1.6;
+    font-size: 14px;
     max-width: 768px;
     color: #ccc;
   }
   small {
     font-size: 14px;
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      &:hover img {
+        transform: scale(1.05);
+      }
+    }
+
+    .hero-image {
+      aspect-ratio: 21 / 9;
+      overflow: hidden;
+      position: relative;
+      height: inherit;
+      img {
+        transition-duration: 500ms;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    h4 {
+      font-size: 12px;
+    }
+    h3 {
+      font-size: 48px;
+      max-width: 768px;
+    }
+    p {
+      font-size: 16px;
+      max-width: 768px;
+    }
+    small {
+      font-size: 14px;
+    }
   }
 </style>
