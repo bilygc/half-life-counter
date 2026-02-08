@@ -12,16 +12,21 @@ import "@fontsource/outfit/700.css";
 <html lang="en">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C7CR2EMC73"
-    ></script>
-    <script>
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-C7CR2EMC73"></script>
+    <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
 
-      gtag("config", "G-C7CR2EMC73");
+      // Track page views on initial load and following Astro transitions
+      document.addEventListener("astro:page-load", () => {
+        gtag("config", "G-C7CR2EMC73");
+      });
     </script>
     <meta charset="utf-8" />
     <meta

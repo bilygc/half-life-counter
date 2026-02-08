@@ -6,226 +6,225 @@ import "@fontsource/outfit/700.css";
 ---
 
 <html lang="en">
-    <head>
-        <!-- Google tag (gtag.js) -->
-        <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-C7CR2EMC73"
-        ></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-C7CR2EMC73"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-            gtag("config", "G-C7CR2EMC73");
-        </script>
-        <meta charset="utf-8" />
-        <meta
-            name="description"
-            content="About Time-Life 3 team: Bily Gomez, gamer and web developer"
-        />
-        <link rel="canonical" href="https://time-life3.com/about" />
-        <link rel="icon" type="image/png" href="/favicon.png" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>About - Time-Life 3</title>
-        <ClientRouter />
-    </head>
-    <body>
-        <Navbar />
-        <main>
-            <section class="about-container">
-                <h1 class="about-title">
-                    PROJECT STATUS: <span class="highlight">CONFIDENTIAL</span>
-                </h1>
-                <div class="about-content">
-                    <p>
-                        The goal of this project is to track the days that have
-                        passed since the release of <span class="hl-bold"
-                            >Half-Life 2: Episode Two</span
-                        >. In the absence of an official sequel, many of us
-                        still keep the faith (myself included). Although hope
-                        wavers at times, every new rumor rekindles it. After
-                        all, as long as there is life, the wait continues.
-                    </p>
-                    <p>
-                        A gamer at heart and a programmer by trade, I created
-                        this space as a tribute to the community and in memory
-                        of those who left us while waiting for this story’s
-                        conclusion.
-                    </p>
-                    <p>
-                        The day a sequel is announced, this counter will
-                        transform into a countdown, marking the end of this
-                        project and a wait that has defined a generation of
-                        players. <span class="hl-bold"
-                            >...Rise and shine, Mister Freeman.</span
-                        >
-                    </p>
-                    <p class="legal-disclaimer">
-                        <i
-                            >Legal Disclaimer: This project is independent and
-                            is not affiliated with Valve Corporation or the
-                            Half-Life franchise. No copyrighted materials have
-                            been used.</i
-                        >
-                    </p>
-                </div>
-            </section>
-        </main>
-    </body>
+      // Track page views on initial load and following Astro transitions
+      document.addEventListener("astro:page-load", () => {
+        gtag("config", "G-C7CR2EMC73");
+      });
+    </script>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="About Time-Life 3 team: Bily Gomez, gamer and web developer"
+    />
+    <link rel="canonical" href="https://time-life3.com/about" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>About - Time-Life 3</title>
+    <ClientRouter />
+  </head>
+  <body>
+    <Navbar />
+    <main>
+      <section class="about-container">
+        <h1 class="about-title">
+          PROJECT STATUS: <span class="highlight">CONFIDENTIAL</span>
+        </h1>
+        <div class="about-content">
+          <p>
+            The goal of this project is to track the days that have passed since
+            the release of <span class="hl-bold">Half-Life 2: Episode Two</span
+            >. In the absence of an official sequel, many of us still keep the
+            faith (myself included). Although hope wavers at times, every new
+            rumor rekindles it. After all, as long as there is life, the wait
+            continues.
+          </p>
+          <p>
+            A gamer at heart and a programmer by trade, I created this space as
+            a tribute to the community and in memory of those who left us while
+            waiting for this story’s conclusion.
+          </p>
+          <p>
+            The day a sequel is announced, this counter will transform into a
+            countdown, marking the end of this project and a wait that has
+            defined a generation of players. <span class="hl-bold"
+              >...Rise and shine, Mister Freeman.</span
+            >
+          </p>
+          <p class="legal-disclaimer">
+            <i
+              >Legal Disclaimer: This project is independent and is not
+              affiliated with Valve Corporation or the Half-Life franchise. No
+              copyrighted materials have been used.</i
+            >
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>
 
 <style is:global>
-    :root {
-        --hl-bg: #0a0600;
-        --hl-primary: #d47800;
-        --hl-secondary: #5e3a1a;
-        --hl-accent: #e1e1e1;
-        --hl-glow: #ffb400;
-        --hl-text-dim: #a0a0a0;
-    }
+  :root {
+    --hl-bg: #0a0600;
+    --hl-primary: #d47800;
+    --hl-secondary: #5e3a1a;
+    --hl-accent: #e1e1e1;
+    --hl-glow: #ffb400;
+    --hl-text-dim: #a0a0a0;
+  }
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    html,
-    body {
-        height: 100%;
-        width: 100%;
-        font-family: "Outfit", system-ui, sans-serif;
-    }
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    font-family: "Outfit", system-ui, sans-serif;
+  }
 
-    body {
-        background: var(--hl-bg);
-        background-image:
-            linear-gradient(rgba(10, 6, 0, 0.75), rgba(10, 6, 0, 0.75)),
-            url("/lambda-bg.jpeg");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        color: var(--hl-accent);
-        position: relative;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
+  body {
+    background: var(--hl-bg);
+    background-image:
+      linear-gradient(rgba(10, 6, 0, 0.75), rgba(10, 6, 0, 0.75)),
+      url("/lambda-bg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: var(--hl-accent);
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
-    body::after {
-        content: " ";
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background:
-            linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
-            linear-gradient(
-                90deg,
-                rgba(212, 120, 0, 0.02),
-                rgba(0, 212, 120, 0.01),
-                rgba(0, 120, 212, 0.02)
-            );
-        z-index: 100;
-        background-size:
-            100% 4px,
-            4px 100%;
-        pointer-events: none;
-        opacity: 0.4;
-    }
+  body::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background:
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+      linear-gradient(
+        90deg,
+        rgba(212, 120, 0, 0.02),
+        rgba(0, 212, 120, 0.01),
+        rgba(0, 120, 212, 0.02)
+      );
+    z-index: 100;
+    background-size:
+      100% 4px,
+      4px 100%;
+    pointer-events: none;
+    opacity: 0.4;
+  }
 
-    main {
-        width: 100%;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 120px 2rem 4rem;
-    }
+  main {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 120px 2rem 4rem;
+  }
 
-    .about-container {
-        max-width: 800px;
-        width: 100%;
-        background: rgba(10, 6, 0, 0.6);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(212, 120, 0, 0.3);
-        padding: 3rem;
-        position: relative;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    }
+  .about-container {
+    max-width: 800px;
+    width: 100%;
+    background: rgba(10, 6, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 120, 0, 0.3);
+    padding: 3rem;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  }
 
-    .about-container::before {
-        content: "";
-        position: absolute;
-        top: -1px;
-        left: -1px;
-        width: 20px;
-        height: 20px;
-        border-top: 2px solid var(--hl-primary);
-        border-left: 2px solid var(--hl-primary);
-    }
+  .about-container::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid var(--hl-primary);
+    border-left: 2px solid var(--hl-primary);
+  }
 
-    .about-container::after {
-        content: "";
-        position: absolute;
-        bottom: -1px;
-        right: -1px;
-        width: 20px;
-        height: 20px;
-        border-bottom: 2px solid var(--hl-primary);
-        border-right: 2px solid var(--hl-primary);
-    }
+  .about-container::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 20px;
+    height: 20px;
+    border-bottom: 2px solid var(--hl-primary);
+    border-right: 2px solid var(--hl-primary);
+  }
 
+  .about-title {
+    font-size: 2rem;
+    letter-spacing: 4px;
+    color: var(--hl-primary);
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(212, 120, 0, 0.2);
+    padding-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(212, 120, 0, 0.3);
+  }
+
+  @media (max-width: 768px) {
     .about-title {
-        font-size: 2rem;
-        letter-spacing: 4px;
-        color: var(--hl-primary);
-        margin-bottom: 2rem;
-        border-bottom: 1px solid rgba(212, 120, 0, 0.2);
-        padding-bottom: 1rem;
-        text-shadow: 0 0 10px rgba(212, 120, 0, 0.3);
+      font-size: 1.45rem;
+      letter-spacing: 2px;
     }
+  }
 
-    @media (max-width: 768px) {
-        .about-title {
-            font-size: 1.45rem;
-            letter-spacing: 2px;
-        }
-    }
+  .highlight {
+    color: #ff4444;
+    text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+  }
 
-    .highlight {
-        color: #ff4444;
-        text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
-    }
+  .about-content {
+    line-height: 1.8;
+    font-weight: 300;
+  }
 
-    .about-content {
-        line-height: 1.8;
-        font-weight: 300;
-    }
+  .about-content p {
+    margin-bottom: 1.5rem;
+    color: var(--hl-accent);
+    opacity: 0.9;
+  }
 
-    .about-content p {
-        margin-bottom: 1.5rem;
-        color: var(--hl-accent);
-        opacity: 0.9;
-    }
+  .about-content p:last-child {
+    margin-bottom: 0;
+  }
 
-    .about-content p:last-child {
-        margin-bottom: 0;
-    }
+  .hl-bold {
+    font-weight: bold;
+  }
 
-    .hl-bold {
-        font-weight: bold;
-    }
-
-    .legal-disclaimer {
-        border-top: 1px solid rgba(212, 120, 0, 0.2);
-        padding: 1rem 0;
-        border-bottom: 1px solid rgba(212, 120, 0, 0.2);
-    }
+  .legal-disclaimer {
+    border-top: 1px solid rgba(212, 120, 0, 0.2);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(212, 120, 0, 0.2);
+  }
 </style>
