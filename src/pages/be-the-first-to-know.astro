@@ -50,7 +50,12 @@ const subscribeUrl = isLocal
             <p class="label">Choose your Intel level:</p>
 
             <label class="preference-option">
-              <input type="radio" name="preference" value="all" checked />
+              <input
+                type="radio"
+                name="subscription_preference"
+                value="all"
+                checked
+              />
               <div class="option-content">
                 <span class="option-title">Deep Intel</span>
                 <span class="option-description"
@@ -60,7 +65,11 @@ const subscribeUrl = isLocal
             </label>
 
             <label class="preference-option">
-              <input type="radio" name="preference" value="official_only" />
+              <input
+                type="radio"
+                name="subscription_preference"
+                value="official_only"
+              />
               <div class="option-content">
                 <span class="option-title">Official Orders Only</span>
                 <span class="option-description"
@@ -96,7 +105,7 @@ const subscribeUrl = isLocal
         const formData = new FormData(form);
         const data = {
           email: formData.get("email"),
-          preference: formData.get("preference"),
+          subscription_preference: formData.get("subscription_preference"),
         };
 
         try {
@@ -111,7 +120,8 @@ const subscribeUrl = isLocal
           const result = await response.json();
 
           if (response.ok) {
-            message.textContent = "✅ Access granted. You will be notified.";
+            message.textContent =
+              "✅ Transmission initiated. Check your inbox for verification.";
             message.classList.add("success");
             form.reset();
           } else {
