@@ -1,0 +1,416 @@
+---
+import Navbar from "../components/Navbar.astro";
+import "@fontsource/outfit/300.css";
+import "@fontsource/outfit/700.css";
+import { ClientRouter } from "astro:transitions";
+
+const isLocal = import.meta.env.DEV;
+const subscribeUrl = isLocal
+  ? "http://localhost:8080/subscribe"
+  : "https://half-life.onrender.com/subscribe";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Be the First to Know | Half-Life 3 Alerts</title>
+    <meta
+      name="description"
+      content="Subscribe to get the latest Half-Life 3 news, leaks, and rumors directly to your inbox."
+    />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <ClientRouter />
+  </head>
+  <body>
+    <Navbar />
+    <main>
+      <div class="content-wrapper">
+        <div class="lambda-container">
+          <span class="lambda">λ</span>
+        </div>
+        <h1>Be the First to Know</h1>
+        <p class="subtitle">
+          Select your frequency and get the transmission as soon as it drops.
+        </p>
+
+        <form id="subscribe-form" class="subscribe-card">
+          <div class="input-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="g.freeman@blackmesa.com"
+              required
+            />
+          </div>
+
+          <div class="preferences-group">
+            <p class="label">Choose your Intel level:</p>
+
+            <label class="preference-option">
+              <input
+                type="radio"
+                name="subscription_preference"
+                value="all"
+                checked
+              />
+              <div class="option-content">
+                <span class="option-title">Deep Intel</span>
+                <span class="option-description"
+                  >Any news, leaks, or rumors. The full picture.</span
+                >
+              </div>
+            </label>
+
+            <label class="preference-option">
+              <input
+                type="radio"
+                name="subscription_preference"
+                value="official_only"
+              />
+              <div class="option-content">
+                <span class="option-title">Official Orders Only</span>
+                <span class="option-description"
+                  >Only confirmed announcements from Valve Corporation.</span
+                >
+              </div>
+            </label>
+          </div>
+
+          <button type="submit" id="submit-btn">
+            <span class="btn-text">Initiate Subscription</span>
+            <span class="loader"></span>
+          </button>
+
+          <div id="message" class="message"></div>
+        </form>
+      </div>
+    </main>
+
+    <script is:inline define:vars={{ subscribeUrl }}>
+      const form = document.getElementById("subscribe-form");
+      const submitBtn = document.getElementById("submit-btn");
+      const message = document.getElementById("message");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        submitBtn.disabled = true;
+        submitBtn.classList.add("loading");
+        message.className = "message";
+        message.textContent = "";
+
+        const formData = new FormData(form);
+        const data = {
+          email: formData.get("email"),
+          subscription_preference: formData.get("subscription_preference"),
+        };
+
+        try {
+          const response = await fetch(subscribeUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            message.textContent =
+              "✅ Transmission initiated. Check your inbox for verification.";
+            message.classList.add("success");
+            form.reset();
+          } else {
+            message.textContent = `❌ Transmission error: ${result.error || "Unknown error"}`;
+            message.classList.add("error");
+          }
+        } catch (err) {
+          message.textContent = "❌ Connection lost with Black Mesa servers.";
+          message.classList.add("error");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove("loading");
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --hl-bg: #0a0600;
+    --hl-primary: #d47800;
+    --hl-secondary: #5e3a1a;
+    --hl-accent: #e1e1e1;
+    --hl-glow: #ffb400;
+    --hl-text-dim: #a0a0a0;
+    --hl-error: #ff4444;
+    --hl-success: #44ff44;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--hl-bg);
+    background-image:
+      linear-gradient(rgba(10, 6, 0, 0.85), rgba(10, 6, 0, 0.85)),
+      url("/lambda-bg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: "Outfit", sans-serif;
+    color: var(--hl-accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      rgba(18, 16, 16, 0) 50%,
+      rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  main {
+    padding: 120px 20px 60px;
+    width: 100%;
+    max-width: 600px;
+    z-index: 10;
+    position: relative;
+  }
+
+  .content-wrapper {
+    text-align: center;
+  }
+
+  .lambda-container {
+    margin-bottom: 30px;
+  }
+
+  .lambda {
+    font-size: 80px;
+    color: var(--hl-primary);
+    text-shadow: 0 0 20px var(--hl-glow);
+    font-weight: 700;
+    animation: pulse 2s infinite ease-in-out;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 0.8;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--hl-primary);
+  }
+
+  .subtitle {
+    color: var(--hl-text-dim);
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+
+  .subscribe-card {
+    background: rgba(20, 15, 5, 0.8);
+    border: 1px solid var(--hl-secondary);
+    padding: 40px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    text-align: left;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  }
+
+  .input-group {
+    margin-bottom: 2rem;
+  }
+
+  .input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--hl-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .input-group input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--hl-secondary);
+    padding: 12px 16px;
+    border-radius: 4px;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .input-group input:focus {
+    outline: none;
+    border-color: var(--hl-primary);
+    box-shadow: 0 0 10px rgba(212, 120, 0, 0.3);
+  }
+
+  .label {
+    color: var(--hl-text-dim);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .preferences-group {
+    margin-bottom: 2.5rem;
+  }
+
+  .preference-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .preference-option:hover {
+    background: rgba(212, 120, 0, 0.05);
+    border-color: rgba(212, 120, 0, 0.2);
+  }
+
+  .preference-option input {
+    accent-color: var(--hl-primary);
+    width: 18px;
+    height: 18px;
+  }
+
+  .option-title {
+    display: block;
+    font-weight: 700;
+    color: var(--hl-primary);
+    font-size: 1rem;
+  }
+
+  .option-description {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--hl-text-dim);
+  }
+
+  button {
+    width: 100%;
+    background: var(--hl-primary);
+    color: black;
+    border: none;
+    padding: 16px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  button:hover:not(:disabled) {
+    background: var(--hl-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 120, 0, 0.4);
+  }
+
+  button:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .loader {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0, 0, 0, 0.3);
+    border-top-color: black;
+    border-radius: 50%;
+    animation: spin 0.8s infinite linear;
+  }
+
+  button.loading .btn-text {
+    display: none;
+  }
+  button.loading .loader {
+    display: block;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .message {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+    min-height: 1.2rem;
+  }
+
+  .message.success {
+    color: var(--hl-success);
+    font-weight: 700;
+  }
+  .message.error {
+    color: var(--hl-error);
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 2rem;
+    }
+    .subscribe-card {
+      padding: 25px;
+    }
+  }
+</style>

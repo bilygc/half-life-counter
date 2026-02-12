@@ -1,0 +1,183 @@
+---
+import Navbar from "../components/Navbar.astro";
+import "@fontsource/outfit/300.css";
+import "@fontsource/outfit/700.css";
+import { ClientRouter } from "astro:transitions";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Subscription Confirmed | Half-Life 3 Alerts</title>
+    <meta
+      name="description"
+      content="Your subscription to Half-Life 3 alerts has been confirmed."
+    />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <ClientRouter />
+  </head>
+  <body>
+    <Navbar />
+    <main>
+      <div class="content-wrapper">
+        <div class="lambda-container">
+          <span class="lambda">λ</span>
+        </div>
+        <h1>Transmission Verified</h1>
+        <p class="subtitle">
+          Your frequency is now synced. You will receive updates as soon as they
+          are detected.
+        </p>
+
+        <div class="success-card">
+          <div class="success-icon">✓</div>
+          <p class="success-message">
+            Access Granted. You have successfully subscribed to Half-Life 3
+            alerts.
+          </p>
+          <a href="/" class="home-link">Return to Base</a>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --hl-bg: #0a0600;
+    --hl-primary: #d47800;
+    --hl-secondary: #5e3a1a;
+    --hl-accent: #e1e1e1;
+    --hl-glow: #ffb400;
+    --hl-text-dim: #a0a0a0;
+    --hl-success: #44ff44;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--hl-bg);
+    background-image:
+      linear-gradient(rgba(10, 6, 0, 0.85), rgba(10, 6, 0, 0.85)),
+      url("/lambda-bg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: "Outfit", sans-serif;
+    color: var(--hl-accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      rgba(18, 16, 16, 0) 50%,
+      rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  main {
+    padding: 120px 20px 60px;
+    width: 100%;
+    max-width: 600px;
+    z-index: 10;
+    position: relative;
+  }
+
+  .content-wrapper {
+    text-align: center;
+  }
+
+  .lambda-container {
+    margin-bottom: 30px;
+  }
+
+  .lambda {
+    font-size: 80px;
+    color: var(--hl-primary);
+    text-shadow: 0 0 20px var(--hl-glow);
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--hl-primary);
+  }
+
+  .subtitle {
+    color: var(--hl-text-dim);
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+
+  .success-card {
+    background: rgba(20, 15, 5, 0.8);
+    border: 1px solid var(--hl-secondary);
+    padding: 40px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  }
+
+  .success-icon {
+    font-size: 4rem;
+    color: var(--hl-success);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 20px rgba(68, 255, 68, 0.3);
+  }
+
+  .success-message {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    color: var(--hl-accent);
+  }
+
+  .home-link {
+    display: inline-block;
+    background: var(--hl-primary);
+    color: black;
+    text-decoration: none;
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+  }
+
+  .home-link:hover {
+    background: var(--hl-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 120, 0, 0.4);
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+</style>
