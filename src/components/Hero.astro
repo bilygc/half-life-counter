@@ -1,12 +1,23 @@
 ---
 import type { Article } from "../pages/index.astro";
+import { getOptimizedImageUrl } from "../utils/image";
 const { article } = Astro.props as { article: Article };
 ---
 
 <article class="hero">
   <a href={article.url} target="_blank" rel="noopener noreferrer">
     <div class="hero-image">
-      <img src={article.urlToImage} alt={article.title} />
+      <picture>
+        <source
+          media="(max-width: 768px)"
+          srcset={getOptimizedImageUrl(article.urlToImage, 375, 450)}
+        />
+        <img
+          fetchpriority="high"
+          src={getOptimizedImageUrl(article.urlToImage, 1200, 514)}
+          alt={article.title}
+        />
+      </picture>
       <div class="gradient"></div>
     </div>
     <div class="hero-content">

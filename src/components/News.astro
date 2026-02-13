@@ -1,5 +1,7 @@
 ---
 import type { Article } from "../pages/index.astro";
+import { getOptimizedImageUrl } from "../utils/image";
+
 interface Props {
   articles: Article[];
   error: string | null;
@@ -59,11 +61,17 @@ const { articles, error } = Astro.props;
             </div>
             {article.urlToImage && (
               <div class="news-image">
-                <img
-                  src={article.urlToImage}
-                  alt={article.title}
-                  loading="lazy"
-                />
+                <picture>
+                  <source
+                    media="(max-width: 768px)"
+                    srcset={getOptimizedImageUrl(article.urlToImage, 294, 200)}
+                  />
+                  <img
+                    src={getOptimizedImageUrl(article.urlToImage, 200, 120)}
+                    alt={article.title}
+                    loading="lazy"
+                  />
+                </picture>
               </div>
             )}
           </article>
