@@ -88,16 +88,34 @@ const isHome = pathname === "/";
 
     if (hamburgerBtn && mobileMenu) {
       hamburgerBtn.addEventListener("click", () => {
-        hamburgerBtn.classList.toggle("active");
-        mobileMenu.classList.toggle("active");
+        const toggleMenu = () => {
+          hamburgerBtn.classList.toggle("active");
+          mobileMenu.classList.toggle("active");
+          document.body.classList.toggle("menu-open");
+        };
+
+        if (document.startViewTransition) {
+          document.startViewTransition(() => toggleMenu());
+        } else {
+          toggleMenu();
+        }
       });
 
       // Close menu when clicking a link
       const mobileLinks = mobileMenu.querySelectorAll(".mobile-nav-link");
       mobileLinks.forEach((link) => {
         link.addEventListener("click", () => {
-          hamburgerBtn.classList.remove("active");
-          mobileMenu.classList.remove("active");
+          const closeMenu = () => {
+            hamburgerBtn.classList.remove("active");
+            mobileMenu.classList.remove("active");
+            document.body.classList.remove("menu-open");
+          };
+
+          if (document.startViewTransition) {
+            document.startViewTransition(() => closeMenu());
+          } else {
+            closeMenu();
+          }
         });
       });
     }
@@ -284,33 +302,118 @@ const isHome = pathname === "/";
     position: fixed;
     top: 0;
     right: -100%;
-    width: 70%;
+    width: 100%;
     height: 100vh;
-    background: rgba(10, 6, 0, 0.95);
+    background: rgba(212, 120, 0, 0.15);
     backdrop-filter: blur(15px);
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 2rem;
-    transition: right 0.3s ease-in-out;
     z-index: 1000;
-    border-left: 1px solid rgba(212, 120, 0, 0.2);
+    border-left: 1px solid rgba(212, 120, 0, 0.4);
     text-align: center;
+    overflow: hidden;
+  }
+
+  .mobile-menu::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(212, 120, 0, 0.05) 50%,
+      transparent
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    opacity: 0.3;
   }
 
   .mobile-menu.active {
     right: 0;
+    animation: menu-glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    background: rgba(212, 120, 0, 0.25);
   }
 
   .mobile-nav-link {
-    color: var(--hl-accent);
+    color: #ffffff;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: 4px;
-    opacity: 0.8;
-    transition: all 0.3s ease;
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 6px;
+    opacity: 1;
+    transition: all 0.2s ease;
+    text-shadow:
+      2px 2px 0px #000,
+      0 0 10px rgba(212, 120, 0, 0.8),
+      0 0 20px rgba(212, 120, 0, 0.4);
+    position: relative;
+  }
+
+  .mobile-menu.active .mobile-nav-link {
+    animation: text-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation-delay: 0.1s;
+  }
+
+  @keyframes menu-glitch {
+    0% {
+      transform: translate(20px, 0) skew(-10deg);
+      opacity: 0;
+      clip-path: inset(40% 0 60% 0);
+    }
+    20% {
+      transform: translate(-20px, 0) skew(10deg);
+      clip-path: inset(20% 0 80% 0);
+    }
+    40% {
+      transform: translate(10px, 0) skew(-5deg);
+      clip-path: inset(60% 0 20% 0);
+    }
+    60% {
+      transform: translate(-5px, 0) skew(5deg);
+      clip-path: inset(10% 0 90% 0);
+    }
+    80% {
+      transform: translate(0, 0) skew(0);
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(0, 0) skew(0);
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes text-glitch {
+    0% {
+      text-shadow:
+        5px 0 0 rgba(255, 0, 0, 0.75),
+        -5px 0 0 rgba(0, 255, 255, 0.75);
+      transform: translate(5px, 0);
+    }
+    20% {
+      text-shadow:
+        -5px 0 0 rgba(255, 0, 0, 0.75),
+        5px 0 0 rgba(0, 255, 255, 0.75);
+      transform: translate(-5px, 0);
+    }
+    40% {
+      text-shadow:
+        3px 0 0 rgba(255, 180, 0, 0.75),
+        -3px 0 0 rgba(0, 0, 0, 0.75);
+      transform: translate(3px, 0);
+    }
+    100% {
+      text-shadow: 2px 2px 0px rgba(212, 120, 0, 0.5);
+      transform: translate(0, 0);
+    }
   }
 
   .mobile-nav-link:hover {
@@ -336,5 +439,18 @@ const isHome = pathname === "/";
       font-size: 1.2rem;
       letter-spacing: 2px;
     }
+  }
+  /* Fade out main content when menu is open */
+  :global(body.menu-open) :global(main) {
+    opacity: 0.1;
+    filter: blur(8px) grayscale(0.5);
+    transition: all 0.5s ease-in-out;
+    pointer-events: none;
+  }
+
+  /* Also fade out the background grid layer if desired */
+  :global(body.menu-open)::after {
+    opacity: 0.1;
+    transition: opacity 0.5s ease-in-out;
   }
 </style>

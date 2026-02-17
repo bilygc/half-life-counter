@@ -1,12 +1,9 @@
 ---
-import { ClientRouter } from "astro:transitions";
+import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
-import Navbar from "../components/Navbar.astro";
 import News from "../components/News.astro";
 import LeftAd from "../components/LeftAd.astro";
 import RightAd from "../components/RightAd.astro";
-import "@fontsource/outfit/300.css";
-import "@fontsource/outfit/700.css";
 
 const { HL_NEWS_TOKEN } = import.meta.env;
 const isLocal = import.meta.env.DEV;
@@ -74,164 +71,17 @@ try {
 }
 ---
 
-<html lang="en">
-  <head>
-    <!-- Google tag (gtag.js) -->
-    <script
-      is:inline
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-C7CR2EMC73"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      // Track page views on initial load and following Astro transitions
-      document.addEventListener("astro:page-load", () => {
-        gtag("config", "G-C7CR2EMC73");
-      });
-    </script>
-    <meta charset="utf-8" />
-    <meta
-      name="google-site-verification"
-      content="YZJG1RXFMe6DFYwiLcUmD4dC0YEkclq03_3PbA7E3rk"
-    />
-    <meta
-      name="description"
-      content="Days since a half-life 3 game release counter"
-    />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <link rel="canonical" href="https://time-life3.com/" />
-    <title>Rumors and news about Half-Life 3 | Current status and leaks</title>
-    <ClientRouter />
-  </head>
-  <body>
-    <Navbar />
-    <main>
-      <LeftAd />
-      <div class="center-content">
-        <Hero article={articles[0]} />
-        <News articles={articles} error={error} />
-      </div>
-      <RightAd />
-    </main>
-  </body>
-</html>
-
-<style is:global>
-  :root {
-    --hl-bg: #0a0600;
-    --hl-primary: #d47800;
-    --hl-secondary: #5e3a1a;
-    --hl-accent: #e1e1e1;
-    --hl-glow: #ffb400;
-    --hl-text-dim: #a0a0a0;
-  }
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  html,
-  body {
-    height: 100%;
-    width: 100%;
-    font-family: "Outfit", system-ui, sans-serif;
-  }
-
-  body {
-    background: var(--hl-bg);
-    background-image:
-      linear-gradient(rgba(10, 6, 0, 0.75), rgba(10, 6, 0, 0.75)),
-      url("/lambda-bg.webp");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    color: var(--hl-accent);
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-
-  body::after {
-    content: " ";
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background:
-      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
-      linear-gradient(
-        90deg,
-        rgba(212, 120, 0, 0.02),
-        rgba(0, 212, 120, 0.01),
-        rgba(0, 120, 212, 0.02)
-      );
-    z-index: 5;
-    background-size:
-      100% 4px,
-      4px 100%;
-    pointer-events: none;
-    opacity: 0.4;
-  }
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  main {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 2rem;
-    padding: 90px 2rem 0;
-  }
-
-  .center-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px;
-  }
-
-  @media (max-width: 768px) {
-    main {
-      flex-direction: column;
-      align-items: center;
-      padding: 80px 0 0 0;
-      gap: 0;
-      justify-content: flex-start;
-    }
-  }
-
-  body.ads-hidden .left-ad,
-  body.ads-hidden .right--ad {
-    display: none;
-  }
-</style>
+<Layout
+  title="Rumors and news about Half-Life 3 | Current status and leaks"
+  description="Days since a half-life 3 game release counter"
+  canonical="https://time-life3.com/"
+>
+  <main>
+    <LeftAd />
+    <div class="center-content">
+      <Hero article={articles[0]} />
+      <News articles={articles} error={error} />
+    </div>
+    <RightAd />
+  </main>
+</Layout>

@@ -1,305 +1,178 @@
 ---
-import { ClientRouter } from "astro:transitions";
+import Layout from "../layouts/Layout.astro";
 import TimeCounter from "../components/TimeCounter.astro";
-import Navbar from "../components/Navbar.astro";
 import { EVENT_NAME, EVENT_DATE } from "../config";
 import LeftAd from "../components/LeftAd.astro";
 import RightAd from "../components/RightAd.astro";
-import "@fontsource/outfit/300.css";
-import "@fontsource/outfit/700.css";
 ---
 
-<html lang="en">
-  <head>
-    <!-- Google tag (gtag.js) -->
-    <script
-      is:inline
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-C7CR2EMC73"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
+<Layout
+  title="how long since half-life 2 episode two?"
+  description="Days since a half-life 3 game release counter"
+  canonical="https://time-life3.com/counter"
+>
+  <main>
+    <LeftAd />
+    <div class="center-content">
+      <TimeCounter eventName={EVENT_NAME} eventDate={EVENT_DATE} />
+      <h2>are you a streamer or do you have your own website?</h2>
+      <p class="description">
+        use this widget on your stream or website to show how long it has been
+        since a half-life 2 sequel was released
+      </p>
+      <div class="config-card">
+        <h2 class="config-title">Embed Timer Configuration</h2>
 
-      // Track page views on initial load and following Astro transitions
-      document.addEventListener("astro:page-load", () => {
-        gtag("config", "G-C7CR2EMC73");
-      });
-    </script>
-    <meta charset="utf-8" />
-    <meta
-      name="google-site-verification"
-      content="YZJG1RXFMe6DFYwiLcUmD4dC0YEkclq03_3PbA7E3rk"
-    />
-    <meta
-      name="description"
-      content="Days since a half-life 3 game release counter"
-    />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <link rel="canonical" href="https://time-life3.com/" />
-    <title>how long since half-life 2 episode two?</title>
-    <ClientRouter />
-  </head>
-  <body>
-    <Navbar />
-    <main>
-      <LeftAd />
-      <div class="center-content">
-        <TimeCounter eventName={EVENT_NAME} eventDate={EVENT_DATE} />
-        <h2>are you a streamer or do you have your own website?</h2>
-        <p class="description">
-          use this widget on your stream or website to show how long it has been
-          since a half-life 2 sequel was released
-        </p>
-        <div class="config-card">
-          <h2 class="config-title">Embed Timer Configuration</h2>
-
-          <div class="preview-section">
-            <p class="section-label">Preview</p>
-            <div class="preview-container">
-              <iframe
-                title="Embed preview"
-                id="preview-iframe"
-                src="/embed?transparent=0"
-                width="400"
-                height="150"
-                frameborder="0"></iframe>
-            </div>
-          </div>
-
-          <div class="input-grid">
-            <div class="input-group">
-              <label for="width-input">Width (pixels)</label>
-              <input
-                type="number"
-                id="width-input"
-                value="400"
-                min="200"
-                max="1200"
-              />
-            </div>
-            <div class="input-group">
-              <label for="height-input">Height (pixels)</label>
-              <input
-                type="number"
-                id="height-input"
-                value="150"
-                min="100"
-                max="600"
-              />
-            </div>
-          </div>
-
-          <div class="checkbox-group">
-            <input type="checkbox" id="transparent-checkbox" />
-            <label for="transparent-checkbox"
-              >Transparent Background (for OBS overlays)</label
-            >
-          </div>
-
-          <div class="code-section">
-            <p class="section-label">Embed Code</p>
-            <div class="code-block">
-              <code id="embed-code-text">
-                &lt;iframe src="https://timenite.com/embed?transparent=0"
-                width="400" height="150" frameborder="0"&gt;&lt;/iframe&gt;
-              </code>
-            </div>
-          </div>
-
-          <button id="copy-button" class="copy-btn">Copy Embed Code</button>
-
-          <div class="instructions-box">
-            <h3 class="instructions-title">Instructions for Streamers</h3>
-            <ul class="instructions-list">
-              <li>Copy the embed code above</li>
-              <li>In OBS, add a Browser Source</li>
-              <li>Set the URL to the iframe src value</li>
-              <li>Set width and height to match your settings</li>
-              <li>Enable "Shutdown source when not visible" for performance</li>
-            </ul>
+        <div class="preview-section">
+          <p class="section-label">Preview</p>
+          <div class="preview-container">
+            <iframe
+              title="Embed preview"
+              id="preview-iframe"
+              src="/embed?transparent=0"
+              width="400"
+              height="150"
+              frameborder="0"></iframe>
           </div>
         </div>
+
+        <div class="input-grid">
+          <div class="input-group">
+            <label for="width-input">Width (pixels)</label>
+            <input
+              type="number"
+              id="width-input"
+              value="400"
+              min="200"
+              max="1200"
+            />
+          </div>
+          <div class="input-group">
+            <label for="height-input">Height (pixels)</label>
+            <input
+              type="number"
+              id="height-input"
+              value="150"
+              min="100"
+              max="600"
+            />
+          </div>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="transparent-checkbox" />
+          <label for="transparent-checkbox"
+            >Transparent Background (for OBS overlays)</label
+          >
+        </div>
+
+        <div class="code-section">
+          <p class="section-label">Embed Code</p>
+          <div class="code-block">
+            <code id="embed-code-text">
+              &lt;iframe src="https://timenite.com/embed?transparent=0"
+              width="400" height="150" frameborder="0"&gt;&lt;/iframe&gt;
+            </code>
+          </div>
+        </div>
+
+        <button id="copy-button" class="copy-btn">Copy Embed Code</button>
+
+        <div class="instructions-box">
+          <h3 class="instructions-title">Instructions for Streamers</h3>
+          <ul class="instructions-list">
+            <li>Copy the embed code above</li>
+            <li>In OBS, add a Browser Source</li>
+            <li>Set the URL to the iframe src value</li>
+            <li>Set width and height to match your settings</li>
+            <li>Enable "Shutdown source when not visible" for performance</li>
+          </ul>
+        </div>
       </div>
-      <RightAd />
-    </main>
+    </div>
+    <RightAd />
+  </main>
 
-    <script>
-      function setup() {
-        const widthInput = document.getElementById(
-          "width-input",
-        ) as HTMLInputElement;
-        const heightInput = document.getElementById(
-          "height-input",
-        ) as HTMLInputElement;
-        const transparentCheckbox = document.getElementById(
-          "transparent-checkbox",
-        ) as HTMLInputElement;
-        const previewIframe = document.getElementById(
-          "preview-iframe",
-        ) as HTMLIFrameElement;
-        const embedCodeText = document.getElementById("embed-code-text");
-        const copyButton = document.getElementById("copy-button");
+  <script>
+    function setup() {
+      const widthInput = document.getElementById(
+        "width-input",
+      ) as HTMLInputElement;
+      const heightInput = document.getElementById(
+        "height-input",
+      ) as HTMLInputElement;
+      const transparentCheckbox = document.getElementById(
+        "transparent-checkbox",
+      ) as HTMLInputElement;
+      const previewIframe = document.getElementById(
+        "preview-iframe",
+      ) as HTMLIFrameElement;
+      const embedCodeText = document.getElementById("embed-code-text");
+      const copyButton = document.getElementById("copy-button");
 
-        function updateEmbed() {
-          if (
-            !widthInput ||
-            !heightInput ||
-            !transparentCheckbox ||
-            !previewIframe ||
-            !embedCodeText
-          )
-            return;
+      function updateEmbed() {
+        if (
+          !widthInput ||
+          !heightInput ||
+          !transparentCheckbox ||
+          !previewIframe ||
+          !embedCodeText
+        )
+          return;
 
-          const width = widthInput.value || "400";
-          const height = heightInput.value || "150";
-          const transparent = transparentCheckbox.checked ? "1" : "0";
+        const width = widthInput.value || "400";
+        const height = heightInput.value || "150";
+        const transparent = transparentCheckbox.checked ? "1" : "0";
 
-          const origin = window.location.origin;
-          const embedUrl = `${origin}/embed?transparent=${transparent}`;
-          const code = `<iframe src="${embedUrl}" width="${width}" height="${height}" frameborder="0"></iframe>`;
+        const origin = window.location.origin;
+        const embedUrl = `${origin}/embed?transparent=${transparent}`;
+        const code = `<iframe src="${embedUrl}" width="${width}" height="${height}" frameborder="0"></iframe>`;
 
-          // Update Preview
-          previewIframe.style.width = `${width}px`;
-          previewIframe.style.height = `${height}px`;
-          previewIframe.src = embedUrl;
+        // Update Preview
+        previewIframe.style.width = `${width}px`;
+        previewIframe.style.height = `${height}px`;
+        previewIframe.src = embedUrl;
 
-          // Update Code Text
-          embedCodeText.textContent = code;
-        }
-
-        widthInput?.addEventListener("input", updateEmbed);
-        heightInput?.addEventListener("input", updateEmbed);
-        transparentCheckbox?.addEventListener("change", updateEmbed);
-
-        copyButton?.addEventListener("click", () => {
-          if (!embedCodeText || !copyButton) return;
-          const code = embedCodeText.textContent || "";
-          navigator.clipboard.writeText(code).then(() => {
-            const originalText = copyButton.textContent;
-            copyButton.textContent = "Copied!";
-            (copyButton as HTMLElement).style.background = "#059669";
-
-            setTimeout(() => {
-              copyButton.textContent = originalText;
-              (copyButton as HTMLElement).style.background = "";
-            }, 2000);
-          });
-        });
-
-        // Initial update
-        updateEmbed();
+        // Update Code Text
+        embedCodeText.textContent = code;
       }
 
-      // Initialize on first load and after view transitions
-      document.addEventListener("astro:page-load", setup);
-    </script>
-  </body>
-</html>
+      widthInput?.addEventListener("input", updateEmbed);
+      heightInput?.addEventListener("input", updateEmbed);
+      transparentCheckbox?.addEventListener("change", updateEmbed);
+
+      copyButton?.addEventListener("click", () => {
+        if (!embedCodeText || !copyButton) return;
+        const code = embedCodeText.textContent || "";
+        navigator.clipboard.writeText(code).then(() => {
+          const originalText = copyButton.textContent;
+          copyButton.textContent = "Copied!";
+          (copyButton as HTMLElement).style.background = "#059669";
+
+          setTimeout(() => {
+            copyButton.textContent = originalText;
+            (copyButton as HTMLElement).style.background = "";
+          }, 2000);
+        });
+      });
+
+      // Initial update
+      updateEmbed();
+    }
+
+    // Initialize on first load and after view transitions
+    document.addEventListener("astro:page-load", setup);
+  </script>
+</Layout>
 
 <style is:global>
   :root {
-    --hl-bg: #0a0600;
-    --hl-primary: #d47800;
-    --hl-secondary: #5e3a1a;
-    --hl-accent: #e1e1e1;
-    --hl-glow: #ffb400;
-    --hl-text-dim: #a0a0a0;
     --card-bg: #1a1a2e;
     --input-bg: #0f0f1d;
     --btn-primary: var(--hl-primary);
   }
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  html,
-  body {
-    height: 100%;
-    width: 100%;
-    font-family: "Outfit", system-ui, sans-serif;
-  }
-
-  body {
-    background: var(--hl-bg);
-    background-image:
-      linear-gradient(rgba(10, 6, 0, 0.75), rgba(10, 6, 0, 0.75)),
-      url("/lambda-bg.webp");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    color: var(--hl-accent);
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-
-  body::after {
-    content: " ";
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background:
-      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
-      linear-gradient(
-        90deg,
-        rgba(212, 120, 0, 0.02),
-        rgba(0, 212, 120, 0.01),
-        rgba(0, 120, 212, 0.02)
-      );
-    z-index: 100;
-    background-size:
-      100% 4px,
-      4px 100%;
-    pointer-events: none;
-    opacity: 0.4;
-  }
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  main {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 2rem;
-    padding: 90px 2rem 2rem;
-  }
-
   .center-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px;
     gap: 3rem;
     & > h2 {
       font-size: 1.5rem;
@@ -491,14 +364,6 @@ import "@fontsource/outfit/700.css";
   }
 
   @media (max-width: 768px) {
-    main {
-      flex-direction: column;
-      align-items: center;
-      padding: 80px 0 2rem 0;
-      gap: 0;
-      justify-content: flex-start;
-    }
-
     .config-card {
       padding: 1.5rem;
       border-radius: 0;
@@ -513,10 +378,5 @@ import "@fontsource/outfit/700.css";
         font-size: 2rem;
       }
     }
-  }
-
-  body.ads-hidden .left-ad,
-  body.ads-hidden .right--ad {
-    display: none;
   }
 </style>

@@ -1,8 +1,5 @@
 ---
-import Navbar from "../components/Navbar.astro";
-import "@fontsource/outfit/300.css";
-import "@fontsource/outfit/700.css";
-import { ClientRouter } from "astro:transitions";
+import Layout from "../layouts/Layout.astro";
 
 const isLocal = import.meta.env.DEV;
 const subscribeUrl = isLocal
@@ -10,187 +7,137 @@ const subscribeUrl = isLocal
   : "https://half-life.onrender.com/subscribe";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Be the First to Know | Half-Life 3 Alerts</title>
-    <meta
-      name="description"
-      content="Subscribe to get the latest Half-Life 3 news, leaks, and rumors directly to your inbox."
-    />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <ClientRouter />
-  </head>
-  <body>
-    <Navbar />
-    <main>
-      <div class="content-wrapper">
-        <div class="lambda-container">
-          <span class="lambda">λ</span>
-        </div>
-        <h1>Be the First to Know</h1>
-        <p class="subtitle">
-          Select your frequency and get the transmission as soon as it drops.
-        </p>
-
-        <form id="subscribe-form" class="subscribe-card">
-          <div class="input-group">
-            <label for="email">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="g.freeman@blackmesa.com"
-              required
-            />
-          </div>
-
-          <div class="preferences-group">
-            <p class="label">Choose your Intel level:</p>
-
-            <label class="preference-option">
-              <input
-                type="radio"
-                name="subscription_preference"
-                value="all"
-                checked
-              />
-              <div class="option-content">
-                <span class="option-title">Deep Intel</span>
-                <span class="option-description"
-                  >Any news, leaks, or rumors. The full picture.</span
-                >
-              </div>
-            </label>
-
-            <label class="preference-option">
-              <input
-                type="radio"
-                name="subscription_preference"
-                value="official_only"
-              />
-              <div class="option-content">
-                <span class="option-title">Official Orders Only</span>
-                <span class="option-description"
-                  >Only confirmed announcements from Valve Corporation.</span
-                >
-              </div>
-            </label>
-          </div>
-
-          <button type="submit" id="submit-btn">
-            <span class="btn-text">Initiate Subscription</span>
-            <span class="loader"></span>
-          </button>
-
-          <div id="message" class="message"></div>
-        </form>
+<Layout
+  title="Be the First to Know | Half-Life 3 Alerts"
+  description="Subscribe to get the latest Half-Life 3 news, leaks, and rumors directly to your inbox."
+  canonical="https://time-life3.com/be-the-first-to-know"
+  showAds={false}
+>
+  <main>
+    <div class="content-wrapper">
+      <div class="lambda-container">
+        <span class="lambda">λ</span>
       </div>
-    </main>
+      <h1>Be the First to Know</h1>
+      <p class="subtitle">
+        Select your frequency and get the transmission as soon as it drops.
+      </p>
 
-    <script is:inline define:vars={{ subscribeUrl }}>
-      const form = document.getElementById("subscribe-form");
-      const submitBtn = document.getElementById("submit-btn");
-      const message = document.getElementById("message");
+      <form id="subscribe-form" class="subscribe-card">
+        <div class="input-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="g.freeman@blackmesa.com"
+            required
+          />
+        </div>
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+        <div class="preferences-group">
+          <p class="label">Choose your Intel level:</p>
 
-        submitBtn.disabled = true;
-        submitBtn.classList.add("loading");
-        message.className = "message";
-        message.textContent = "";
+          <label class="preference-option">
+            <input
+              type="radio"
+              name="subscription_preference"
+              value="all"
+              checked
+            />
+            <div class="option-content">
+              <span class="option-title">Deep Intel</span>
+              <span class="option-description"
+                >Any news, leaks, or rumors. The full picture.</span
+              >
+            </div>
+          </label>
 
-        const formData = new FormData(form);
-        const data = {
-          email: formData.get("email"),
-          subscription_preference: formData.get("subscription_preference"),
-        };
+          <label class="preference-option">
+            <input
+              type="radio"
+              name="subscription_preference"
+              value="official_only"
+            />
+            <div class="option-content">
+              <span class="option-title">Official Orders Only</span>
+              <span class="option-description"
+                >Only confirmed announcements from Valve Corporation.</span
+              >
+            </div>
+          </label>
+        </div>
 
-        try {
-          const response = await fetch(subscribeUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          });
+        <button type="submit" id="submit-btn">
+          <span class="btn-text">Initiate Subscription</span>
+          <span class="loader"></span>
+        </button>
 
-          const result = await response.json();
+        <div id="message" class="message"></div>
+      </form>
+    </div>
+  </main>
 
-          if (response.ok) {
-            message.textContent =
-              "✅ Transmission initiated. Check your inbox for verification.";
-            message.classList.add("success");
-            form.reset();
-          } else {
-            message.textContent = `❌ Transmission error: ${result.error || "Unknown error"}`;
-            message.classList.add("error");
-          }
-        } catch (err) {
-          message.textContent = "❌ Connection lost with Black Mesa servers.";
+  <script is:inline define:vars={{ subscribeUrl }}>
+    const form = document.getElementById("subscribe-form");
+    const submitBtn = document.getElementById("submit-btn");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.classList.add("loading");
+      message.className = "message";
+      message.textContent = "";
+
+      const formData = new FormData(form);
+      const data = {
+        email: formData.get("email"),
+        subscription_preference: formData.get("subscription_preference"),
+      };
+
+      try {
+        const response = await fetch(subscribeUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          message.textContent =
+            "✅ Transmission initiated. Check your inbox for verification.";
+          message.classList.add("success");
+          form.reset();
+        } else {
+          message.textContent = `❌ Transmission error: ${result.error || "Unknown error"}`;
           message.classList.add("error");
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.classList.remove("loading");
         }
-      });
-    </script>
-  </body>
-</html>
+      } catch (err) {
+        message.textContent = "❌ Connection lost with Black Mesa servers.";
+        message.classList.add("error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove("loading");
+      }
+    });
+  </script>
+</Layout>
 
 <style is:global>
   :root {
-    --hl-bg: #0a0600;
-    --hl-primary: #d47800;
-    --hl-secondary: #5e3a1a;
-    --hl-accent: #e1e1e1;
-    --hl-glow: #ffb400;
-    --hl-text-dim: #a0a0a0;
     --hl-error: #ff4444;
     --hl-success: #44ff44;
   }
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
   body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background: var(--hl-bg);
     background-image:
       linear-gradient(rgba(10, 6, 0, 0.85), rgba(10, 6, 0, 0.85)),
       url("/email-subscription.webp");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    font-family: "Outfit", sans-serif;
-    color: var(--hl-accent);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      rgba(18, 16, 16, 0) 50%,
-      rgba(0, 0, 0, 0.1) 50%
-    );
-    background-size: 100% 4px;
-    z-index: 5;
-    pointer-events: none;
-    opacity: 0.3;
   }
 
   main {

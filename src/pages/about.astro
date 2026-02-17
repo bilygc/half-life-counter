@@ -1,151 +1,52 @@
 ---
-import { ClientRouter } from "astro:transitions";
-import Navbar from "../components/Navbar.astro";
-import "@fontsource/outfit/300.css";
-import "@fontsource/outfit/700.css";
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-  <head>
-    <!-- Google tag (gtag.js) -->
-    <script
-      is:inline
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-C7CR2EMC73"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      // Track page views on initial load and following Astro transitions
-      document.addEventListener("astro:page-load", () => {
-        gtag("config", "G-C7CR2EMC73");
-      });
-    </script>
-    <meta charset="utf-8" />
-    <meta
-      name="description"
-      content="About Time-Life 3: Centralizing intel, rumors, leaks and official announcements for Half-Life 3."
-    />
-    <link rel="canonical" href="https://time-life3.com/about" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>About - Time-Life 3 Intel</title>
-    <ClientRouter />
-  </head>
-  <body>
-    <Navbar />
-    <main>
-      <section class="about-container">
-        <h1 class="about-title">
-          MISSION STATUS: <span class="highlight">GATHERING INTEL</span>
-        </h1>
-        <div class="about-content">
-          <p>
-            The objective of this project has evolved. While we continue to
-            track the days since <span class="hl-bold"
-              >Half-Life 2: Episode Two</span
-            >, this space is now dedicated to centralizing <span class="hl-bold"
-              >rumors, leaks, and official announcements</span
-            > regarding the arrival of Half-Life 3.
-          </p>
-          <p>
-            In the silence left by official channels, the community remains our
-            best source of hope. A gamer at heart and a programmer by trade, I
-            created this hub to sift through the noise and document the search
-            for the conclusion we’ve waited defining years for.
-          </p>
-          <p>
-            The day a sequel is officially confirmed, this counter will
-            transform into a countdown to release. Until then, we remain
-            operational, keeping a watchful eye on every fragment of data. <span
-              class="hl-bold">...Rise and shine, Mister Freeman.</span
-            >
-          </p>
-          <p class="legal-disclaimer">
-            <i
-              >Legal Disclaimer: This project is independent and is not
-              affiliated with Valve Corporation or the Half-Life franchise. No
-              copyrighted materials have been used.</i
-            >
-          </p>
-        </div>
-      </section>
-    </main>
-  </body>
-</html>
+<Layout
+  title="About - Time-Life 3 Intel"
+  description="About Time-Life 3: Centralizing intel, rumors, leaks and official announcements for Half-Life 3."
+  canonical="https://time-life3.com/about"
+>
+  <main>
+    <section class="about-container">
+      <h1 class="about-title">
+        MISSION STATUS: <span class="highlight">GATHERING INTEL</span>
+      </h1>
+      <div class="about-content">
+        <p>
+          The objective of this project has evolved. While we continue to track
+          the days since <span class="hl-bold">Half-Life 2: Episode Two</span>,
+          this space is now dedicated to centralizing <span class="hl-bold"
+            >rumors, leaks, and official announcements</span
+          > regarding the arrival of Half-Life 3.
+        </p>
+        <p>
+          In the silence left by official channels, the community remains our
+          best source of hope. A gamer at heart and a programmer by trade, I
+          created this hub to sift through the noise and document the search for
+          the conclusion we’ve waited defining years for.
+        </p>
+        <p>
+          The day a sequel is officially confirmed, this counter will transform
+          into a countdown to release. Until then, we remain operational,
+          keeping a watchful eye on every fragment of data. <span
+            class="hl-bold">...Rise and shine, Mister Freeman.</span
+          >
+        </p>
+        <p class="legal-disclaimer">
+          <i
+            >Legal Disclaimer: This project is independent and is not affiliated
+            with Valve Corporation or the Half-Life franchise. No copyrighted
+            materials have been used.</i
+          >
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
 
 <style is:global>
-  :root {
-    --hl-bg: #0a0600;
-    --hl-primary: #d47800;
-    --hl-secondary: #5e3a1a;
-    --hl-accent: #e1e1e1;
-    --hl-glow: #ffb400;
-    --hl-text-dim: #a0a0a0;
-  }
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  html,
-  body {
-    height: 100%;
-    width: 100%;
-    font-family: "Outfit", system-ui, sans-serif;
-  }
-
-  body {
-    background: var(--hl-bg);
-    background-image:
-      linear-gradient(rgba(10, 6, 0, 0.75), rgba(10, 6, 0, 0.75)),
-      url("/lambda-bg.webp");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    color: var(--hl-accent);
-    position: relative;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  body::after {
-    content: " ";
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background:
-      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
-      linear-gradient(
-        90deg,
-        rgba(212, 120, 0, 0.02),
-        rgba(0, 212, 120, 0.01),
-        rgba(0, 120, 212, 0.02)
-      );
-    z-index: 100;
-    background-size:
-      100% 4px,
-      4px 100%;
-    pointer-events: none;
-    opacity: 0.4;
-  }
-
   main {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
     padding: 120px 2rem 4rem;
   }
 
