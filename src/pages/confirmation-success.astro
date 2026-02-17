@@ -1,98 +1,45 @@
 ---
-import Navbar from "../components/Navbar.astro";
-import "@fontsource/outfit/300.css";
-import "@fontsource/outfit/700.css";
-import { ClientRouter } from "astro:transitions";
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Subscription Confirmed | Half-Life 3 Alerts</title>
-    <meta
-      name="description"
-      content="Your subscription to Half-Life 3 alerts has been confirmed."
-    />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <ClientRouter />
-  </head>
-  <body>
-    <Navbar />
-    <main>
-      <div class="content-wrapper">
-        <div class="lambda-container">
-          <span class="lambda">λ</span>
-        </div>
-        <h1>Transmission Verified</h1>
-        <p class="subtitle">
-          Your frequency is now synced. You will receive updates as soon as they
-          are detected.
-        </p>
-
-        <div class="success-card">
-          <div class="success-icon">✓</div>
-          <p class="success-message">
-            Access Granted. You have successfully subscribed to Half-Life 3
-            alerts.
-          </p>
-          <a href="/" class="home-link">Return to Base</a>
-        </div>
+<Layout
+  title="Subscription Confirmed | Half-Life 3 Alerts"
+  description="Your subscription to Half-Life 3 alerts has been confirmed."
+  canonical="https://time-life3.com/confirmation-success"
+  showAds={false}
+>
+  <main>
+    <div class="content-wrapper">
+      <div class="lambda-container">
+        <span class="lambda">λ</span>
       </div>
-    </main>
-  </body>
-</html>
+      <h1>Transmission Verified</h1>
+      <p class="subtitle">
+        Your frequency is now synced. You will receive updates as soon as they
+        are detected.
+      </p>
+
+      <div class="success-card">
+        <div class="success-icon">✓</div>
+        <p class="success-message">
+          Access Granted. You have successfully subscribed to Half-Life 3
+          alerts.
+        </p>
+        <a href="/" class="home-link">Return to Base</a>
+      </div>
+    </div>
+  </main>
+</Layout>
 
 <style is:global>
   :root {
-    --hl-bg: #0a0600;
-    --hl-primary: #d47800;
-    --hl-secondary: #5e3a1a;
-    --hl-accent: #e1e1e1;
-    --hl-glow: #ffb400;
-    --hl-text-dim: #a0a0a0;
     --hl-success: #44ff44;
   }
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
   body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background: var(--hl-bg);
     background-image:
       linear-gradient(rgba(10, 6, 0, 0.85), rgba(10, 6, 0, 0.85)),
       url("/lambda-bg.webp");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    font-family: "Outfit", sans-serif;
-    color: var(--hl-accent);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      rgba(18, 16, 16, 0) 50%,
-      rgba(0, 0, 0, 0.1) 50%
-    );
-    background-size: 100% 4px;
-    z-index: 5;
-    pointer-events: none;
-    opacity: 0.3;
   }
 
   main {
