@@ -88,16 +88,26 @@ const isHome = pathname === "/";
 
     if (hamburgerBtn && mobileMenu) {
       hamburgerBtn.addEventListener("click", () => {
-        const toggleMenu = () => {
-          hamburgerBtn.classList.toggle("active");
-          mobileMenu.classList.toggle("active");
-          document.body.classList.toggle("menu-open");
+        const isOpen = mobileMenu.classList.contains("active");
+
+        const updateMenu = () => {
+          if (isOpen) {
+            hamburgerBtn.classList.remove("active");
+            mobileMenu.classList.remove("active");
+            mobileMenu.classList.add("inactive");
+            document.body.classList.remove("menu-open");
+          } else {
+            hamburgerBtn.classList.add("active");
+            mobileMenu.classList.remove("inactive");
+            mobileMenu.classList.add("active");
+            document.body.classList.add("menu-open");
+          }
         };
 
         if (document.startViewTransition) {
-          document.startViewTransition(() => toggleMenu());
+          document.startViewTransition(() => updateMenu());
         } else {
-          toggleMenu();
+          updateMenu();
         }
       });
 
@@ -106,9 +116,12 @@ const isHome = pathname === "/";
       mobileLinks.forEach((link) => {
         link.addEventListener("click", () => {
           const closeMenu = () => {
-            hamburgerBtn.classList.remove("active");
-            mobileMenu.classList.remove("active");
-            document.body.classList.remove("menu-open");
+            if (mobileMenu.classList.contains("active")) {
+              hamburgerBtn.classList.remove("active");
+              mobileMenu.classList.remove("active");
+              mobileMenu.classList.add("inactive");
+              document.body.classList.remove("menu-open");
+            }
           };
 
           if (document.startViewTransition) {
@@ -337,7 +350,15 @@ const isHome = pathname === "/";
   .mobile-menu.active {
     right: 0;
     animation: menu-glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation-fill-mode: forwards;
     background: rgba(212, 120, 0, 0.25);
+  }
+
+  .mobile-menu.inactive {
+    right: 0;
+    animation: menu-glitch-reverse 0.3s cubic-bezier(0.45, 0.94, 0.25, 0.46)
+      both;
+    animation-delay: 0.2s;
   }
 
   .mobile-nav-link {
@@ -359,6 +380,11 @@ const isHome = pathname === "/";
   .mobile-menu.active .mobile-nav-link {
     animation: text-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     animation-delay: 0.1s;
+  }
+
+  .mobile-menu.inactive .mobile-nav-link {
+    animation: text-glitch-reverse 0.3s cubic-bezier(0.45, 0.94, 0.25, 0.46)
+      both;
   }
 
   @keyframes menu-glitch {
@@ -391,6 +417,36 @@ const isHome = pathname === "/";
     }
   }
 
+  @keyframes menu-glitch-reverse {
+    0% {
+      transform: translate(0, 0) skew(0);
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+    }
+    20% {
+      transform: translate(0, 0) skew(0);
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+    }
+    40% {
+      transform: translate(-5px, 0) skew(5deg);
+      clip-path: inset(10% 0 90% 0);
+    }
+    60% {
+      transform: translate(10px, 0) skew(-5deg);
+      clip-path: inset(60% 0 20% 0);
+    }
+    80% {
+      transform: translate(-20px, 0) skew(10deg);
+      clip-path: inset(20% 0 80% 0);
+    }
+    100% {
+      transform: translate(20px, 0) skew(-10deg);
+      opacity: 0;
+      clip-path: inset(40% 0 60% 0);
+    }
+  }
+
   @keyframes text-glitch {
     0% {
       text-shadow:
@@ -413,6 +469,31 @@ const isHome = pathname === "/";
     100% {
       text-shadow: 2px 2px 0px rgba(212, 120, 0, 0.5);
       transform: translate(0, 0);
+    }
+  }
+
+  @keyframes text-glitch-reverse {
+    0% {
+      text-shadow: 2px 2px 0px rgba(212, 120, 0, 0.5);
+      transform: translate(0, 0);
+    }
+    20% {
+      text-shadow:
+        3px 0 0 rgba(255, 180, 0, 0.75),
+        -3px 0 0 rgba(0, 0, 0, 0.75);
+      transform: translate(3px, 0);
+    }
+    40% {
+      text-shadow:
+        -5px 0 0 rgba(255, 0, 0, 0.75),
+        5px 0 0 rgba(0, 255, 255, 0.75);
+      transform: translate(-5px, 0);
+    }
+    100% {
+      text-shadow:
+        5px 0 0 rgba(255, 0, 0, 0.75),
+        -5px 0 0 rgba(0, 255, 255, 0.75);
+      transform: translate(5px, 0);
     }
   }
 
