@@ -5,6 +5,21 @@ const isLocal = import.meta.env.DEV;
 const subscribeUrl = isLocal
   ? "http://localhost:8080/subscribe"
   : "https://half-life.onrender.com/subscribe";
+
+const countUrl = isLocal
+  ? "http://localhost:8080/subscribers/count"
+  : "https://half-life.onrender.com/subscribers/count";
+
+let subscriberCount = 0;
+try {
+  const response = await fetch(countUrl);
+  if (response.ok) {
+    const data = await response.json();
+    subscriberCount = data.count;
+  }
+} catch (err) {
+  console.error("Failed to fetch subscriber count:", err);
+}
 ---
 
 <Layout
@@ -22,6 +37,16 @@ const subscribeUrl = isLocal
       <p class="subtitle">
         Select your frequency and get the transmission as soon as it drops.
       </p>
+
+      <div class="resistance-counter">
+        <div class="counter-label">Active Resistance Members</div>
+        <div class="counter-value">
+          {subscriberCount.toString().padStart(6, "0")}
+        </div>
+        <div class="counter-status">
+          <span class="blink">●</span> SECURE CHANNEL ACTIVE
+        </div>
+      </div>
 
       <form id="subscribe-form" class="subscribe-card">
         <div class="input-group">
@@ -187,7 +212,70 @@ const subscribeUrl = isLocal
   .subtitle {
     color: var(--hl-text-dim);
     font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .resistance-counter {
+    background: rgba(30, 20, 10, 0.4);
+    border: 1px solid var(--hl-secondary);
+    padding: 15px 25px;
+    border-radius: 4px;
+    display: inline-block;
     margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+    min-width: 280px;
+  }
+
+  .resistance-counter::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--hl-primary);
+    box-shadow: 0 0 10px var(--hl-glow);
+  }
+
+  .counter-label {
+    font-size: 0.75rem;
+    color: var(--hl-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    opacity: 0.8;
+  }
+
+  .counter-value {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 2.5rem;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  }
+
+  .counter-status {
+    font-size: 0.7rem;
+    color: var(--hl-success);
+    margin-top: 5px;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  .blink {
+    animation: blink-anim 1s infinite step-end;
+  }
+
+  @keyframes blink-anim {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
   }
 
   .subscribe-card {
