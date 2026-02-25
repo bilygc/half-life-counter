@@ -1,0 +1,266 @@
+---
+import { evidenceItems } from "../data/evidence";
+import EvidenceCard from "./EvidenceCard.astro";
+
+const categories = [...new Set(evidenceItems.map((item) => item.category))];
+const credibilities = ["confirmed", "plausible", "speculative", "debunked"];
+
+const stats = credibilities.map((cred) => ({
+    label: cred,
+    count: evidenceItems.filter((item) => item.credibility === cred).length,
+}));
+---
+
+<div class="tracker-container">
+    <div class="stats-bar" data-aos="fade-down">
+        {
+            stats.map((stat) => (
+                <div class="stat-item" data-cred={stat.label}>
+                    <span class="stat-count">{stat.count}</span>
+                    <span class="stat-label">{stat.label}</span>
+                </div>
+            ))
+        }
+    </div>
+
+    <div class="filter-controls" data-aos="fade-up">
+        <div class="filter-group">
+            <span class="group-label">Category:</span>
+            <div class="button-grid">
+                <button
+                    class="filter-btn active"
+                    data-type="category"
+                    data-value="all">All</button
+                >
+                {
+                    categories.map((cat) => (
+                        <button
+                            class="filter-btn"
+                            data-type="category"
+                            data-value={cat}
+                        >
+                            {cat}
+                        </button>
+                    ))
+                }
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <span class="group-label">Credibility:</span>
+            <div class="button-grid">
+                <button
+                    class="filter-btn active"
+                    data-type="credibility"
+                    data-value="all">All</button
+                >
+                {
+                    credibilities.map((cred) => (
+                        <button
+                            class="filter-btn"
+                            data-type="credibility"
+                            data-value={cred}
+                        >
+                            {cred}
+                        </button>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="evidence-grid">
+        {evidenceItems.map((item) => <EvidenceCard evidence={item} />)}
+    </div>
+</div>
+
+<script>
+    function setupTracker() {
+        const filters = {
+            category: "all",
+            credibility: "all",
+        };
+
+        const buttons = document.querySelectorAll(".filter-btn");
+        const cards = document.querySelectorAll(".evidence-card");
+
+        function updateView() {
+            cards.forEach((card) => {
+                const cat = (card as HTMLElement).dataset.category;
+                const cred = (card as HTMLElement).dataset.credibility;
+
+                const catMatch =
+                    filters.category === "all" || filters.category === cat;
+                const credMatch =
+                    filters.credibility === "all" ||
+                    filters.credibility === cred;
+
+                if (catMatch && credMatch) {
+                    (card as HTMLElement).style.display = "flex";
+                } else {
+                    (card as HTMLElement).style.display = "none";
+                }
+            });
+        }
+
+        buttons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const type = (btn as HTMLElement).dataset.type as
+                    | "category"
+                    | "credibility";
+                const value = (btn as HTMLElement).dataset.value;
+
+                // Update active markers for this group
+                const groupBtns = document.querySelectorAll(
+                    `.filter-btn[data-type="${type}"]`,
+                );
+                groupBtns.forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                // Update filters
+                filters[type] = value!;
+                updateView();
+            });
+        });
+    }
+
+    document.addEventListener("astro:page-load", setupTracker);
+</script>
+
+<style>
+    .tracker-container {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .stats-bar {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 3rem;
+        padding: 1.5rem;
+        background: rgba(10, 6, 0, 0.5);
+        border: 1px solid var(--hl-secondary);
+        border-radius: 8px;
+        flex-wrap: wrap;
+    }
+
+    .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 100px;
+    }
+
+    .stat-count {
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--hl-primary);
+        line-height: 1;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-top: 5px;
+    }
+
+    .stat-item[data-cred="confirmed"] .stat-count {
+        color: #059669;
+    }
+    .stat-item[data-cred="plausible"] .stat-count {
+        color: #2563eb;
+    }
+    .stat-item[data-cred="speculative"] .stat-count {
+        color: #d97706;
+    }
+    .stat-item[data-cred="debunked"] .stat-count {
+        color: #dc2626;
+    }
+
+    .filter-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 4rem;
+        background: rgba(10, 6, 0, 0.4);
+        padding: 2rem;
+        border: 1px solid rgba(212, 120, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .group-label {
+        font-size: 0.85rem;
+        font-weight: 800;
+        color: var(--hl-primary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        min-width: 100px;
+    }
+
+    .button-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .filter-btn {
+        background: transparent;
+        border: 1px solid var(--hl-secondary);
+        color: var(--hl-text-dim);
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+        border-color: var(--hl-primary);
+        color: var(--hl-primary);
+    }
+
+    .filter-btn.active {
+        background: var(--hl-primary);
+        color: #000;
+        border-color: var(--hl-primary);
+    }
+
+    .evidence-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+        gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .filter-group {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .evidence-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-bar {
+            gap: 1rem;
+        }
+
+        .stat-item {
+            min-width: 80px;
+        }
+    }
+</style>
