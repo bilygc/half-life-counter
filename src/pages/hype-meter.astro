@@ -1,0 +1,73 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HypeMeterComponent from "../components/HypeMeter.astro";
+import LeftAd from "../components/LeftAd.astro";
+import RightAd from "../components/RightAd.astro";
+---
+
+<Layout
+    title="Hype Meter | Half-Life 3 Threat Level Index"
+    description="Track the global hype level for Half-Life 3 based on leaks, Valve activity, community signals, and insider intel."
+    canonical="https://time-life3.com/hype-meter"
+>
+    <main>
+        <LeftAd />
+        <div class="center-content">
+            <header class="hype-header" data-aos="fade-up">
+                <h1 class="title">
+                    THREAT LEVEL: <span class="highlight">HYPE</span>
+                </h1>
+                <p class="subtitle">
+                    A composite index measuring the probability of Half-Life 3
+                    based on verified signals, leaks, and community momentum.
+                </p>
+            </header>
+
+            <HypeMeterComponent />
+        </div>
+        <RightAd />
+    </main>
+</Layout>
+
+<style>
+    .hype-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 0 1rem;
+    }
+
+    .title {
+        font-size: 3rem;
+        letter-spacing: 4px;
+        color: var(--hl-primary);
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        text-shadow: 0 0 15px rgba(212, 120, 0, 0.4);
+    }
+
+    .highlight {
+        color: #ff4444;
+        text-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        color: var(--hl-text-dim);
+        font-weight: 300;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .title {
+            font-size: 2rem;
+            letter-spacing: 2px;
+        }
+
+        .hype-header {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
+</style>
